@@ -1,0 +1,28 @@
+before_script:
+  - echo $GO_PROJECT_PATH
+
+stages:
+  - build
+  - test
+  - release
+
+build-my-project:
+  image: golang:1.9
+  stage: build
+  script:
+    - go build
+
+test:
+  image: golang:1.9
+  stage: test
+  script:
+    - go test -v ./...
+
+release:
+  image: golang:1.9
+  stage: release
+  script:
+    make goreleaser
+  allow_failure: true
+  only:
+    - tags
