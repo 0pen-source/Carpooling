@@ -1,0 +1,12 @@
+language: go
+go:
+- 1.8.3
+before_install:
+- true
+install:
+- make depend
+before_script:
+- true
+script:
+- make lint
+#- make test

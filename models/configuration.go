@@ -1,16 +1,7 @@
 package models
 
-import (
-	"reflect"
-
-	"github.com/go-redis/redis"
-	"github.com/go-sql-driver/mysql"
-	"gopkg.in/go-playground/validator.v8"
-)
-
-//Configuration _
+// Configuration model
 type Configuration struct {
-	MODE string `mapstructure:"mode" validate:"required"`
 	HTTP struct {
 		Address string `mapstructure:"address" validate:"required,tcp_addr"`
 	} `mapstructure:"http" validate:"required"`
@@ -18,6 +9,7 @@ type Configuration struct {
 		EncryptResponseKey string `mapstructure:"encrypt_response_key" validate:"required"`
 		EncryptCPMKey      string `mapstructure:"encrypt_cpm_key" validate:"required"`
 	} `mapstructure:"encryption" validate:"required"`
+	MODE     string `mapstructure:"mode" validate:"required"`
 	Tracking struct {
 		Filename   string `mapstructure:"filename" validate:"required"`
 		MaxSize    int    `mapstructure:"max_size" validate:"required"`
@@ -55,6 +47,10 @@ type Configuration struct {
 		AreaFile   string `mapstructure:"area_file"`
 		IPDataFile string `mapstructure:"ip_data_file"`
 	} `mapstructure:"iacip"`
+	Statistics struct {
+		Endpoint string `mapstructure:"endpoint" validate:"required,url"`
+		Overview string `mapstructure:"overview" validate:"required,url"`
+	} `mapstructure:"statistics" validate:"required"`
 	RPC struct {
 		Address               string `mapstructure:"address" validate:"required,url"`
 		MaxIdleConnsPerHost   int    `mapstructure:"max_idle_conns_per_host" validate:"required,min=1"`
@@ -68,20 +64,4 @@ type Configuration struct {
 		URL string `mapstructure:"url"`
 	}
 	RequestInterval map[string]int `mapstructure:"request_interval"`
-}
-
-func (c Configuration) Validate() error {
-	validate := validator.New(&validator.Config{TagName: "validate"})
-	_ = validate.RegisterValidation("dsn", dsnValidator)
-	_ = validate.RegisterValidation("redis_url", redisURLValidator)
-	return validate.Struct(c)
-}
-func dsnValidator(v *validator.Validate, topStruct reflect.Value, currentStructOrField reflect.Value, field reflect.Value, fieldType reflect.Type, fieldKind reflect.Kind, param string) bool {
-	dsn, err := mysql.ParseDSN(field.String())
-	return err == nil && dsn.ParseTime
-}
-
-func redisURLValidator(v *validator.Validate, topStruct reflect.Value, currentStructOrField reflect.Value, field reflect.Value, fieldType reflect.Type, fieldKind reflect.Kind, param string) bool {
-	_, err := redis.ParseURL(field.String())
-	return err == nil
 }

@@ -1,10 +1,12 @@
 package main
 
 import (
-	"github.com/Carpooling/models"
-	"github.com/Carpooling/utils"
-	"github.com/spf13/viper"
 	"os"
+
+	"Carpooling/models"
+	"Carpooling/utils"
+
+	"github.com/spf13/viper"
 )
 
 var config models.Configuration
@@ -20,5 +22,4 @@ func initializeConfiguration() {
 
 	utils.Must(nil, viper.ReadInConfig())
 	utils.Must(nil, viper.Unmarshal(&config))
-	utils.Must(nil, config.Validate())
 }

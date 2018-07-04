@@ -1,5 +1,6 @@
 before_script:
   - echo $GO_PROJECT_PATH
+  - pwd
 
 stages:
   - build
