@@ -3,8 +3,8 @@ package main
 import (
 	"os"
 
-	"Carpooling/models"
-	"Carpooling/utils"
+	"github.com/0pen-source/Carpooling/models"
+	"github.com/0pen-source/Carpooling/utils"
 
 	"github.com/spf13/viper"
 )

@@ -5,28 +5,27 @@ import (
 	"net/http"
 	"runtime"
 
+	"github.com/0pen-source/Carpooling/dao"
+	"github.com/0pen-source/Carpooling/service"
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
 	initializeConfiguration()
-
+	dao.InitializeCache(config.CarpoolingDatabases)
 	runtime.GOMAXPROCS(runtime.NumCPU())
 	gin.SetMode(config.MODE)
 	router := gin.Default()
-
-	router.GET("/", Index)
-
+	service.Checkcode = config.Checkcode
+	router.Use(
+		service.MarkTesting(),
+	)
+	router.POST("/v1/user/phonetest", service.Phonetest)
 	server := &http.Server{
-		Addr:    "127.0.0.1:8080",
+		Addr:    config.Address,
 		Handler: router,
 	}
 	if err := server.ListenAndServe(); err != nil {
 		fmt.Println(err)
 	}
-}
-
-// Index _
-func Index(c *gin.Context) {
-	c.String(http.StatusOK, "Hello world")
 }
