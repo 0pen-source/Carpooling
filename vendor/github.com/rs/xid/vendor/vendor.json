@@ -1,0 +1,15 @@
+{
+	"comment": "",
+	"ignore": "",
+	"package": [
+		{
+			"path": "golang.org/x/sys/unix",
+			"revision": ""
+		},
+		{
+			"path": "golang.org/x/sys/windows",
+			"revision": ""
+		}
+	],
+	"rootPath": "github.com/rs/xid"
+}
