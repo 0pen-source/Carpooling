@@ -46,6 +46,7 @@ func Login(c *gin.Context) {
 		NickName:      user.Nickname,
 		Last_location: user.LastLocation,
 	}
+	response.Code = http.StatusOK
 	response.Data = login
 	if c.GetBool("testing") {
 		c.JSON(http.StatusOK, response)
