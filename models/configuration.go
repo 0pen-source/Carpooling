@@ -6,6 +6,10 @@ type Configuration struct {
 	CarpoolingDatabases DB     `mapstructure:"carpooling_databases" validate:"required"`
 	MODE                string `mapstructure:"mode" validate:"required"`
 	Checkcode           string `mapstructure:"checkcode" validate:"required"`
+	Redis struct {
+		URL      string `mapstructure:"url" validate:"required,redis_url"`
+		PoolSize int    `mapstructure:"pool_size" validate:"required,min=1"`
+	} `mapstructure:"redis"`
 }
 
 // DB model

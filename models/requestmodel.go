@@ -1,10 +1,18 @@
 package models
 
-// IOSPayload _
+// Phonetest _
 type Phonetest struct {
 	CommonPayload `structs:",flatten"`
 
-	Phone string `binding:"-" form:"phone" structs:"phone"`
+	Phone string `binding:"required,omitempty,len=11,numeric" form:"phone" structs:"phone"`
+}
+
+// Phonetest _
+type Login struct {
+	CommonPayload `structs:",flatten"`
+
+	Phone    string `binding:"required,omitempty,len=11,numeric" form:"phone" structs:"phone"`
+	Password string `binding:"-" form:"password" structs:"password"`
 }
 
 // CommonPayload _

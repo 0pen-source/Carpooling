@@ -12,6 +12,7 @@ import (
 
 func main() {
 	initializeConfiguration()
+	dao.InitializeRedis(config.Redis.URL, config.Redis.PoolSize)
 	dao.InitializeCache(config.CarpoolingDatabases)
 	runtime.GOMAXPROCS(runtime.NumCPU())
 	gin.SetMode(config.MODE)
@@ -20,7 +21,12 @@ func main() {
 	router.Use(
 		service.MarkTesting(),
 	)
-	router.POST("/v1/user/phonetest", service.Phonetest)
+	developerGroup := router.Group("/v1/user")
+	{
+		developerGroup.POST("/phonetest", service.Phonetest)
+		developerGroup.POST("/login", service.Login)
+	}
+
 	server := &http.Server{
 		Addr:    config.Address,
 		Handler: router,

@@ -3,11 +3,12 @@ package models
 // ABTest _
 type User struct {
 	Id           string `db:"id"`
-	Guid         int64  `db:"guid"`
+	Guid         string `db:"guid"`
 	Phone        string `db:"phone"`
 	Username     string `db:"username"`
+	Password     string `db:"password"`
 	Nickname     string `db:"nickname"`
-	Sex          string `db:"sex"`
-	balance      string `db:"balance"`
+	Sex          int    `db:"sex"`
+	Balance      int64  `db:"balance"`
 	LastLocation string `db:"LastLocation"`
 }
