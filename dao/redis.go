@@ -6,7 +6,6 @@ import (
 
 	"github.com/0pen-source/Carpooling/utils"
 	"github.com/go-redis/redis"
-	"github.com/jinzhu/now"
 )
 
 var redisManager *Redis
@@ -47,29 +46,6 @@ func (r *Redis) Exceeds(limit int64, adID, uniqueDeviceID string) bool {
 	}
 
 	return frequency >= limit
-}
-
-// Increment increments impression by one of specific ad or PromotionApp on specific device
-func (r *Redis) Increment(adID, uniqueDeviceID string, times ...time.Time) {
-	key := r.key(adID, uniqueDeviceID)
-
-	tx := r.client.TxPipeline()
-
-	// incr
-	tx.Incr(key)
-
-	// set expiration
-	endOfDay := now.EndOfDay()
-	if len(times) > 0 {
-		endOfDay = times[0]
-	}
-	//endOfDay := now.EndOfDay()
-	tx.ExpireAt(key, endOfDay)
-
-	if _, err := tx.Exec(); err != nil {
-		return
-	}
-
 }
 
 // Activate _

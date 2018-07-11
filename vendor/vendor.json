@@ -33,6 +33,12 @@
 			"revisionTime": "2018-04-04T17:41:02Z"
 		},
 		{
+			"checksumSHA1": "1qDKTZ60A59b6RZuYhRxhHTYqPU=",
+			"path": "github.com/jinzhu/now",
+			"revision": "ed742868f2aebdb1c0c437bf4f7257f88834b66f",
+			"revisionTime": "2018-05-11T01:59:16Z"
+		},
+		{
 			"checksumSHA1": "F45m6rdNc9pgzu5vWN1n1Rwbk4A=",
 			"path": "github.com/jmoiron/sqlx",
 			"revision": "0dae4fefe7c0e190f7b5a78dac28a1c82cc8d849",
