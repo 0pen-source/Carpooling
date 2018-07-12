@@ -23,10 +23,11 @@ func main() {
 	)
 	developerGroup := router.Group("/v1/user")
 	{
-		developerGroup.POST("/phonetest", service.Phonetest)
+		developerGroup.POST("/checkphone", service.Phonetest)
 		developerGroup.POST("/login", service.Login)
 		developerGroup.POST("/getcode", service.GetVerificationCode)
 		developerGroup.POST("/checkcode", service.CheckCode)
+		developerGroup.POST("/register", service.Register)
 	}
 
 	server := &http.Server{

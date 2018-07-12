@@ -14,6 +14,7 @@ type Login struct {
 
 	Phone    string `binding:"required,omitempty,len=11,numeric" form:"phone" structs:"phone"`
 	Password string `binding:"-" form:"password" structs:"password"`
+	Nickname string `binding:"-" form:"nickname" structs:"nickname"`
 }
 type Code struct {
 	Code   string `binding:"-" form:"code" structs:"code"`

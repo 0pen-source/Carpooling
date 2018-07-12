@@ -2,9 +2,10 @@ package dao
 
 import (
 	"encoding/json"
-	"time"
+	"fmt"
 
 	"github.com/0pen-source/Carpooling/models"
+	"github.com/rs/xid"
 )
 
 // GetUser _
@@ -16,7 +17,6 @@ func GetUser(phone string) (user models.User, err error) {
 	if err != nil {
 		err = cacheDB.Get(&user, query, phone)
 		if err == nil {
-			mem_cache.Put(phone, user, time.Second*5)
 			userbyte, _ := json.Marshal(user)
 			redisManager.SetKey(phone, string(userbyte))
 		}
@@ -26,5 +26,18 @@ func GetUser(phone string) (user models.User, err error) {
 
 	json.Unmarshal([]byte(userStr), &user)
 	return user, nil
+
+}
+
+// SaveUser _
+func SaveUser(user models.User) (err error) {
+	user.Guid = xid.New().String()
+	_, err = cacheDB.NamedExec("INSERT INTO user (phone, password, nickname,guid) VALUES (:phone, :password, :nickname, :guid)", user)
+	fmt.Println(err)
+	if err == nil {
+		userbyte, _ := json.Marshal(user)
+		redisManager.SetKey(user.Phone, string(userbyte))
+	}
+	return err
 
 }

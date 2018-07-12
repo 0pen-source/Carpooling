@@ -55,3 +55,4 @@ func Login(c *gin.Context) {
 	}
 	c.Render(http.StatusOK, NewEncryptedJSONRender(response, []byte(Config.Checkcode)))
 }
+
