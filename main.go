@@ -17,7 +17,7 @@ func main() {
 	runtime.GOMAXPROCS(runtime.NumCPU())
 	gin.SetMode(config.MODE)
 	router := gin.Default()
-	service.Checkcode = config.Checkcode
+	service.Config = config
 	router.Use(
 		service.MarkTesting(),
 	)
@@ -25,6 +25,8 @@ func main() {
 	{
 		developerGroup.POST("/phonetest", service.Phonetest)
 		developerGroup.POST("/login", service.Login)
+		developerGroup.POST("/getcode", service.GetVerificationCode)
+		developerGroup.POST("/checkcode", service.CheckCode)
 	}
 
 	server := &http.Server{

@@ -28,6 +28,7 @@ func Login(c *gin.Context) {
 
 	}
 	if user.Password != payload.Password {
+
 		phonetest := models.PhoneTestResponse{}
 		response.Code = http.StatusNotFound
 		response.Message = "手机号和密码不匹配"
@@ -52,5 +53,5 @@ func Login(c *gin.Context) {
 		c.JSON(http.StatusOK, response)
 		return
 	}
-	c.Render(http.StatusOK, NewEncryptedJSONRender(response, []byte(Checkcode)))
+	c.Render(http.StatusOK, NewEncryptedJSONRender(response, []byte(Config.Checkcode)))
 }

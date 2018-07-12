@@ -8,7 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-var Checkcode string
+var Config models.Configuration
 
 func Phonetest(c *gin.Context) {
 	payload := models.Phonetest{}
@@ -32,5 +32,5 @@ func Phonetest(c *gin.Context) {
 		c.JSON(http.StatusOK, response)
 		return
 	}
-	c.Render(http.StatusOK, NewEncryptedJSONRender(response, []byte(Checkcode)))
+	c.Render(http.StatusOK, NewEncryptedJSONRender(response, []byte(Config.Checkcode)))
 }

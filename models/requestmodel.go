@@ -5,6 +5,7 @@ type Phonetest struct {
 	CommonPayload `structs:",flatten"`
 
 	Phone string `binding:"required,omitempty,len=11,numeric" form:"phone" structs:"phone"`
+	Code  string `binding:"omitempty,len=6,numeric" form:"code" structs:"code"`
 }
 
 // Phonetest _
@@ -13,6 +14,11 @@ type Login struct {
 
 	Phone    string `binding:"required,omitempty,len=11,numeric" form:"phone" structs:"phone"`
 	Password string `binding:"-" form:"password" structs:"password"`
+}
+type Code struct {
+	Code   string `binding:"-" form:"code" structs:"code"`
+	Msg    string `binding:"-" form:"msg" structs:"msg"`
+	SmUuid string `binding:"-" form:"smUuid" structs:"smUuid"`
 }
 
 // CommonPayload _

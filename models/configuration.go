@@ -6,6 +6,11 @@ type Configuration struct {
 	CarpoolingDatabases DB     `mapstructure:"carpooling_databases" validate:"required"`
 	MODE                string `mapstructure:"mode" validate:"required"`
 	Checkcode           string `mapstructure:"checkcode" validate:"required"`
+	AccessKey           string `mapstructure:"accessKey" validate:"required"`
+	Secret              string `mapstructure:"secret" validate:"required"`
+	Sign                string `mapstructure:"sign" validate:"required"`
+	TemplateID          string `mapstructure:"templateId" validate:"required"`
+	VerificationCodeURL string `mapstructure:"verificationcodeurl" validate:"required"`
 	Redis struct {
 		URL      string `mapstructure:"url" validate:"required,redis_url"`
 		PoolSize int    `mapstructure:"pool_size" validate:"required,min=1"`
