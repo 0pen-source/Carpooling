@@ -63,6 +63,12 @@
 			"revisionTime": "2018-05-11T14:21:26Z"
 		},
 		{
+			"checksumSHA1": "eMb+00rKbq8U/bt40OvX1bXMNVQ=",
+			"path": "github.com/parnurzeal/gorequest",
+			"revision": "8e3aed27fe49f7fdc765dad067845f600fc984e8",
+			"revisionTime": "2017-10-15T11:04:55Z"
+		},
+		{
 			"checksumSHA1": "hlXUEyUn6u1ZhZbunDqTTEz1gyw=",
 			"path": "github.com/pelletier/go-toml",
 			"revision": "603baefff989777996bf283da430d693e78eba3a",
