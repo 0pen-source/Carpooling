@@ -5,7 +5,8 @@ type Response struct {
 	Data interface{} `json:"data" structs:"data"`
 }
 type PhoneTestResponse struct {
-	Exit bool `json:"exit" structs:"exit"`
+	Exit   bool `json:"exit,omitempty" structs:"exit"`
+	Status bool `json:"exit,omitempty" structs:"exit"`
 }
 
 type LoginResponse struct {

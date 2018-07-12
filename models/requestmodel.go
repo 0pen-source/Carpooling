@@ -5,7 +5,7 @@ type Phonetest struct {
 	CommonPayload `structs:",flatten"`
 
 	Phone string `binding:"required,omitempty,len=11,numeric" form:"phone" structs:"phone"`
-	Code  string `binding:"omitempty,len=6,numeric" form:"code" structs:"code"`
+	VerificationCode  string `binding:"omitempty,len=6,numeric" form:"verification_code" structs:"verification_code"`
 }
 
 // Phonetest _

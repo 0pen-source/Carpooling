@@ -61,19 +61,19 @@ func CheckCode(c *gin.Context) {
 
 	code, _ := dao.GetCode(payload.Phone)
 	response := models.Response{}
-	if code != payload.Code {
+	phonetest := models.PhoneTestResponse{}
+	if code != payload.VerificationCode {
 		response.Code = http.StatusNotFound
 		response.Message = "验证码输入错误"
-		response.Data =
-			struct {
-			}{}
-
+		phonetest.Status = false
+		response.Data = phonetest
+			
 	} else {
 		response.Code = http.StatusOK
 		response.Message = "验证码输入正确"
-		response.Data =
-			struct {
-			}{}
+		phonetest.Status = true
+		response.Data = phonetest
+
 	}
 
 	if c.GetBool("testing") {
