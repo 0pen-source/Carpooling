@@ -29,12 +29,10 @@ func Register(c *gin.Context) {
 		c.JSON(http.StatusOK, response)
 		return
 	}
-
 	response.Code = http.StatusOK
 	response.Message = "注册成功，请登录"
 	phonetest.Status = true
 	response.Data = phonetest
-	c.JSON(http.StatusOK, response)
 	if c.GetBool("testing") {
 		c.JSON(http.StatusOK, response)
 		return
