@@ -63,6 +63,12 @@
 			"revisionTime": "2018-05-11T14:21:26Z"
 		},
 		{
+			"checksumSHA1": "CxNwJP++vjUAyy3bbJnNss1Il9Q=",
+			"path": "github.com/moul/http2curl",
+			"revision": "9ac6cf4d929b2fa8fd2d2e6dec5bb0feb4f4911d",
+			"revisionTime": "2017-09-19T18:10:01Z"
+		},
+		{
 			"checksumSHA1": "eMb+00rKbq8U/bt40OvX1bXMNVQ=",
 			"path": "github.com/parnurzeal/gorequest",
 			"revision": "8e3aed27fe49f7fdc765dad067845f600fc984e8",
