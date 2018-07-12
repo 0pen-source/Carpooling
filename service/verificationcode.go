@@ -31,20 +31,19 @@ func GetVerificationCode(c *gin.Context) {
 		Retry(3, 2*time.Second, http.StatusInternalServerError).
 		EndStruct(&code)
 	response := models.Response{}
+	phonetest := models.PhoneTestResponse{}
 	if len(errs) != 0 || code.Msg != "SUCCESS" {
 		response.Code = http.StatusNotFound
 		response.Message = "验证码发送失败"
-		response.Data =
-			struct {
-			}{}
+		phonetest.Status = false
+		response.Data = phonetest
 
 	} else {
 		dao.SaveCode(payload.Phone, vcode)
 		response.Code = http.StatusOK
 		response.Message = "验证码发送成功"
-		response.Data =
-			struct {
-			}{}
+		phonetest.Status = true
+		response.Data = phonetest
 	}
 
 	if c.GetBool("testing") {
@@ -67,7 +66,7 @@ func CheckCode(c *gin.Context) {
 		response.Message = "验证码输入错误"
 		phonetest.Status = false
 		response.Data = phonetest
-			
+
 	} else {
 		response.Code = http.StatusOK
 		response.Message = "验证码输入正确"
