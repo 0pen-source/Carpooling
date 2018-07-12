@@ -10,5 +10,5 @@ type User struct {
 	Nickname     string `db:"nickname"`
 	Sex          int    `db:"sex"`
 	Balance      int64  `db:"balance"`
-	LastLocation string `db:"LastLocation"`
+	LastLocation string `db:"last_location"`
 }

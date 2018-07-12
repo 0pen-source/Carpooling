@@ -4,17 +4,20 @@ package models
 type Phonetest struct {
 	CommonPayload `structs:",flatten"`
 
-	Phone string `binding:"required,omitempty,len=11,numeric" form:"phone" structs:"phone"`
-	VerificationCode  string `binding:"omitempty,len=6,numeric" form:"verification_code" structs:"verification_code"`
+	Phone            string `binding:"required,omitempty,len=11,numeric" form:"phone" structs:"phone"`
+	VerificationCode string `binding:"omitempty,len=6,numeric" form:"verification_code" structs:"verification_code"`
 }
 
 // Phonetest _
 type Login struct {
 	CommonPayload `structs:",flatten"`
 
-	Phone    string `binding:"required,omitempty,len=11,numeric" form:"phone" structs:"phone"`
-	Password string `binding:"-" form:"password" structs:"password"`
-	Nickname string `binding:"-" form:"nickname" structs:"nickname"`
+	Phone        string `binding:"required,omitempty,len=11,numeric" form:"phone" structs:"phone"`
+	Password     string `binding:"-" form:"password" structs:"password"`
+	Nickname     string `binding:"-" form:"nickname" structs:"nickname"`
+	LastLocation string `binding:"-" form:"last_location" structs:"last_location"`
+	Sex          int    `binding:"-" form:"sex" structs:"sex"`
+	Username     string `binding:"-" form:"username" structs:"username"`
 }
 type Code struct {
 	Code   string `binding:"-" form:"code" structs:"code"`

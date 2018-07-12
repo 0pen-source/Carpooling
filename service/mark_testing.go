@@ -1,6 +1,8 @@
 package service
 
 import (
+	"github.com/0pen-source/Carpooling/dao"
+	"github.com/0pen-source/Carpooling/models"
 	"github.com/gin-gonic/gin"
 )
 
@@ -11,6 +13,32 @@ func MarkTesting() gin.HandlerFunc {
 
 		c.Set("testing", testing)
 
+		c.Next()
+	}
+}
+
+// MarkTesting returns a middleware that marks the request as testing
+func Auth() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		payload := models.Phonetest{}
+		requestToken := c.Request.Header.Get("Token")
+		if err := c.Bind(&payload); err != nil {
+			return
+		}
+		token, errs := dao.GetToken(payload.Phone)
+		if errs != nil {
+			c.AbortWithStatusJSON(400, gin.H{
+				"error": "用户token失效",
+			})
+			return
+		}
+		if token != requestToken {
+			c.AbortWithStatusJSON(400, gin.H{
+				"error": "用户token失效",
+			})
+			return
+
+		}
 		c.Next()
 	}
 }

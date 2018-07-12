@@ -39,7 +39,6 @@ func Login(c *gin.Context) {
 
 	}
 	login := models.LoginResponse{
-		Token:         xid.New().String(),
 		UserName:      user.Username,
 		Sex:           user.Sex,
 		Uid:           user.Guid,
@@ -49,10 +48,12 @@ func Login(c *gin.Context) {
 	}
 	response.Code = http.StatusOK
 	response.Data = login
+	token := xid.New().String()
+	dao.SaveToken(user.Phone, token)
+	c.Header("token", token)
 	if c.GetBool("testing") {
 		c.JSON(http.StatusOK, response)
 		return
 	}
 	c.Render(http.StatusOK, NewEncryptedJSONRender(response, []byte(Config.Checkcode)))
 }
-

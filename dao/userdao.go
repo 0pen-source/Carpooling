@@ -3,9 +3,14 @@ package dao
 import (
 	"encoding/json"
 	"fmt"
+	"strings"
 
 	"github.com/0pen-source/Carpooling/models"
 	"github.com/rs/xid"
+)
+
+const (
+	Token_REDIS_KEY = "token"
 )
 
 // GetUser _
@@ -39,5 +44,59 @@ func SaveUser(user models.User) (err error) {
 		redisManager.SetKey(user.Phone, string(userbyte))
 	}
 	return err
+
+}
+
+// UpdateUser _
+func UpdateUser(user models.User) (err error) {
+	sql := "UPDATE `user` set "
+	core_strings := []string{}
+
+	if user.Username != "" {
+		core_strings = append(core_strings, "username = :username")
+	}
+	if user.Password != "" {
+		core_strings = append(core_strings, "password = :password")
+	}
+	if user.Nickname != "" {
+		core_strings = append(core_strings, "nickname = :nickname")
+	}
+	if user.Sex != 0 {
+		core_strings = append(core_strings, "sex = :sex")
+	}
+	if user.LastLocation != "" {
+		core_strings = append(core_strings, "last_location = :last_location")
+	}
+	sql += strings.Join(core_strings, ",")
+	sql += " where phone = :phone"
+	fmt.Println(sql)
+	_, err = cacheDB.NamedExec(sql, user)
+	UpdateUserRedis(user.Phone)
+	fmt.Println(err)
+	return err
+
+}
+
+// GetUser _
+func UpdateUserRedis(phone string) {
+	query := "SELECT * FROM `user` where phone = ?"
+	var user models.User
+	err := cacheDB.Get(&user, query, phone)
+	if err == nil {
+		userbyte, _ := json.Marshal(user)
+		redisManager.SetKey(phone, string(userbyte))
+	}
+
+}
+
+// SaveToken _
+func SaveToken(phone, token string) {
+	redisManager.SetKey(fmt.Sprintf("%s_%s", Token_REDIS_KEY, phone), token)
+
+}
+
+// GetToken _
+func GetToken(phone string) (string, error) {
+	return redisManager.GetKey(fmt.Sprintf("%s_%s", Token_REDIS_KEY, phone))
 
 }

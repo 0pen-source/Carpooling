@@ -21,13 +21,20 @@ func main() {
 	router.Use(
 		service.MarkTesting(),
 	)
-	developerGroup := router.Group("/v1/user")
+	noLoginUserGroup := router.Group("/v1/user")
 	{
-		developerGroup.POST("/checkphone", service.Phonetest)
-		developerGroup.POST("/login", service.Login)
-		developerGroup.POST("/getcode", service.GetVerificationCode)
-		developerGroup.POST("/checkcode", service.CheckCode)
-		developerGroup.POST("/register", service.Register)
+		noLoginUserGroup.POST("/checkphone", service.Phonetest)
+		noLoginUserGroup.POST("/login", service.Login)
+		noLoginUserGroup.POST("/getcode", service.GetVerificationCode)
+		noLoginUserGroup.POST("/checkcode", service.CheckCode)
+		noLoginUserGroup.POST("/register", service.Register)
+	}
+	LoginUserGroup := router.Group("/v1/user")
+	{
+		LoginUserGroup.Use(
+			service.Auth(),
+		)
+		LoginUserGroup.POST("/setinformation", service.SetInformation)
 	}
 
 	server := &http.Server{
