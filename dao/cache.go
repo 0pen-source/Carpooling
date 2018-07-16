@@ -21,7 +21,7 @@ func init() {
 	mem_cache, _ = cache.NewCache("memory", `{"interval":5}`)
 }
 func InitializeCache() {
-	cacheDB = sqlx.MustConnect("mysql", config.CarpoolingDatabases.DataSourceName).Unsafe()
-	cacheDB.SetMaxOpenConns(config.CarpoolingDatabases.MaxIdleConns)
-	cacheDB.SetMaxIdleConns(config.CarpoolingDatabases.MaxIdleConns)
+	cacheDB = sqlx.MustConnect("mysql", Config.CarpoolingDatabases.DataSourceName).Unsafe()
+	cacheDB.SetMaxOpenConns(Config.CarpoolingDatabases.MaxIdleConns)
+	cacheDB.SetMaxIdleConns(Config.CarpoolingDatabases.MaxIdleConns)
 }

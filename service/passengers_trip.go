@@ -2,23 +2,35 @@ package service
 
 import (
 	"net/http"
+	"time"
 
 	"github.com/0pen-source/Carpooling/dao"
 	"github.com/0pen-source/Carpooling/models"
 	"github.com/gin-gonic/gin"
 )
 
-func Register(c *gin.Context) {
-	payload := models.UserMessage{}
+func CreatTrip(c *gin.Context) {
+	payload := models.TripMessage{}
 	if err := c.Bind(&payload); err != nil {
 		return
 	}
-	user := models.User{
-		Phone:    payload.Phone,
-		Password: payload.Password,
-		Nickname: payload.Nickname,
+	trip := models.PassengersTrip{
+		Username:        payload.Username,
+		Nickname:        payload.Nickname,
+		Phone:           payload.Phone,
+		CreateTime:      time.Now().Unix(),
+		TravelTime:      payload.TravelTime,
+		TravelTimeTitle: payload.TravelTimeTitle,
+		From:            payload.From,
+		FromLat:         payload.FromLat,
+		FromLon:         payload.FromLon,
+		DestinationLat:  payload.DestinationLat,
+		DestinationLon:  payload.DestinationLon,
+		Destination:     payload.Destination,
+		PayPrice:        payload.PayPrice,
+		Surplus:         payload.Surplus,
 	}
-	err := dao.SaveUser(user)
+	err := dao.SavePassengersTrip(trip)
 	response := models.Response{}
 	phonetest := models.PhoneTestResponse{}
 	if err != nil {

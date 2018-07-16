@@ -20,6 +20,26 @@ type UserMessage struct {
 	Sex          int    `binding:"-" form:"sex" structs:"sex"`
 	Username     string `binding:"-" form:"username" structs:"username"`
 }
+
+// UserMessage _
+type TripMessage struct {
+	CommonPayload `structs:",flatten"`
+
+	Username        string  `binding:"-" form:"username" structs:"username"`
+	Nickname        string  `binding:"-" form:"nickname" structs:"nickname"`
+	Phone           string  `binding:"required,omitempty,len=11,numeric" form:"phone" structs:"phone"`
+	TravelTime      string  `binding:"-" form:"travel_time" structs:"travel_time"`
+	TravelTimeTitle string  `binding:"-" form:"travel_time_title" structs:"travel_time_title"`
+	From            string  `binding:"required," form:"from" structs:"from"`
+	FromLon         float64 `binding:"-," form:"from_lon" structs:"from_lon"`
+	FromLat         float64 `binding:"-," form:"from_lat" structs:"from_lat"`
+	Destination     string  `binding:"required" form:"destination" structs:"destination"`
+	DestinationLon  float64 `binding:"-" form:"destination_lon" structs:"destination_lon"`
+	DestinationLat  float64 `binding:"-" form:"destination_lat" structs:"destination_lat"`
+	PayPrice        int64   `binding:"-" form:"pay_price" structs:"pay_price"`
+	Surplus         int     `binding:"-" form:"surplus" structs:"surplus"`
+}
+
 type Code struct {
 	Code   string `binding:"-" form:"code" structs:"code"`
 	Msg    string `binding:"-" form:"msg" structs:"msg"`

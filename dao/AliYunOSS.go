@@ -11,13 +11,13 @@ var bucketIDCards *oss.Bucket
 var err error
 
 func InitOSSClient() {
-	ossClient, err = oss.New(config.OSSConfig.EndPoint, config.OSSConfig.AccessKeyId, config.OSSConfig.AccessKeySecret)
-	fmt.Println("授权信息", config.OSSConfig.EndPoint, config.OSSConfig.AccessKeyId, config.OSSConfig.AccessKeySecret)
+	ossClient, err = oss.New(Config.OSSConfig.EndPoint, Config.OSSConfig.AccessKeyId, Config.OSSConfig.AccessKeySecret)
+	fmt.Println("授权信息", Config.OSSConfig.EndPoint, Config.OSSConfig.AccessKeyId, Config.OSSConfig.AccessKeySecret)
 	if err != nil {
 		fmt.Println(err)
 	}
 
-	bucketIDCards, err = ossClient.Bucket(config.OSSConfig.BucketIDCards)
+	bucketIDCards, err = ossClient.Bucket(Config.OSSConfig.BucketIDCards)
 	if err != nil {
 		fmt.Println(err)
 	}

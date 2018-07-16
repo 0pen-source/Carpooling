@@ -1,6 +1,7 @@
 package dao
 
 import (
+	"encoding/json"
 	"fmt"
 	"time"
 
@@ -11,8 +12,8 @@ import (
 var redisManager *Redis
 
 func InitializeRedis() {
-	options := utils.Must(redis.ParseURL(config.Redis.URL)).(*redis.Options)
-	options.PoolSize = config.Redis.PoolSize
+	options := utils.Must(redis.ParseURL(Config.Redis.URL)).(*redis.Options)
+	options.PoolSize = Config.Redis.PoolSize
 	redisManager = NewRedis(redis.NewClient(options))
 }
 
@@ -77,4 +78,11 @@ func (Redis) key(adID, uniqueDeviceID string) string {
 
 func (Redis) activatedKey(adID, uniqueDeviceID string) string {
 	return fmt.Sprintf("activated_%s_%s", adID, uniqueDeviceID)
+}
+
+// UpdateRedis _
+func (r *Redis) UpdateObject(key string, object interface{}) {
+	obj, _ := json.Marshal(object)
+	r.SetKey(key, string(obj))
+
 }

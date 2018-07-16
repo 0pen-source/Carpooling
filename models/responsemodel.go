@@ -19,6 +19,9 @@ type LoginResponse struct {
 	Last_location string `json:"last_location,omitempty" structs:"last_location"`
 	Exit          bool   `json:"exit,omitempty" structs:"exit"`
 }
+type Upload struct {
+	URL string `json:"url,omitempty" structs:"url"`
+}
 
 type Commonresponse struct {
 	Code    int    `json:"code" structs:"code"`

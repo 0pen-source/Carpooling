@@ -36,11 +36,12 @@ func Upload(c *gin.Context) {
 	path, err := filepath.Abs(filepath.Dir(os.Args[0]))
 	_, err = io.Copy(out, file)
 
-	go dao.SaveImage(path, filename, payload.ImageType,payload.Phone)
-
-	c.String(http.StatusOK, "upload successful")
-}
-
-func GetFileNewName() {
-
+	go dao.SaveImage(path, filename, payload.ImageType, payload.Phone)
+	response := models.Upload{}
+	response.URL = fmt.Sprintf("%s%s", "https://id-cards.oss-cn-beijing.aliyuncs.com/", filename)
+	if c.GetBool("testing") {
+		c.JSON(http.StatusOK, response)
+		return
+	}
+	c.Render(http.StatusOK, NewEncryptedJSONRender(response, []byte(dao.Config.Checkcode)))
 }

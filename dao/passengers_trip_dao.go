@@ -3,19 +3,14 @@ package dao
 import (
 	"encoding/json"
 	"fmt"
-	"os"
 	"strings"
 
 	"github.com/0pen-source/Carpooling/models"
 	"github.com/rs/xid"
 )
 
-const (
-	Token_REDIS_KEY = "token"
-)
-
-// GetUser _
-func GetUser(phone string) (user models.User, err error) {
+// GetPassengersTrip _
+func GetPassengersTrip(phone string) (user models.User, err error) {
 	var userStr string
 	query := "SELECT * FROM `user` where phone = ?"
 
@@ -35,36 +30,20 @@ func GetUser(phone string) (user models.User, err error) {
 
 }
 
-// SaveUser _
-func SaveUser(user models.User) (err error) {
-	user.Guid = xid.New().String()
-	_, err = cacheDB.NamedExec("INSERT INTO user (phone, password, nickname, guid) VALUES (:phone, :password, :nickname, :guid)", user)
+// SavePassengersTrip _
+func SavePassengersTrip(trip models.PassengersTrip) (err error) {
+	trip.Guid = xid.New().String()
+	_, err = cacheDB.NamedExec("INSERT INTO passengers_trip (username,phone,create_time,travel_time,travel_time_title,from,from_location,destination,destination_location,pay_price,surplus,nickname,from_lon,from_lat,destination_lon,destination_lat, guid) VALUES "+
+		"(:username,:phone,:create_time,:travel_time,:travel_time_title,:from,:from_location,:destination,:destination_location,:pay_price,:surplus,:nickname,:from_lon,:from_lat,:destination_lon,:destination_lat,: guid)", trip)
 	if err == nil {
-		UpdateUserRedis(user.Phone)
+		redisManager.UpdateObject(trip.Guid, trip)
 	}
 	return err
 
 }
 
-func SaveImage(path, filename, imageType, phone string) {
-
-	PutObject(bucketIDCards, filename, fmt.Sprintf("%s/%s", path, filename))
-
-	os.Remove(fmt.Sprintf("%s/%s", path, filename))
-	user := models.User{
-		Phone: phone,
-	}
-	if imageType == "idcard" {
-		user.IDCardsURL = fmt.Sprintf("%s/%s", path, filename)
-	} else if imageType == "driving" {
-		user.DriverURL = fmt.Sprintf("%s/%s", path, filename)
-	}
-	SaveUser(user)
-
-}
-
-// UpdateUser _
-func UpdateUser(user models.User) (err error) {
+// UpdatePassengersTrip _
+func UpdatePassengersTrip(user models.User) (err error) {
 	sql := "UPDATE `user` set "
 	core_strings := []string{}
 
@@ -93,8 +72,8 @@ func UpdateUser(user models.User) (err error) {
 
 }
 
-// GetUser _
-func UpdateUserRedis(phone string) {
+// UpdatePassengersTripRedis _
+func UpdatePassengersTripRedis(phone string) {
 	query := "SELECT * FROM `user` where phone = ?"
 	var user models.User
 	err := cacheDB.Get(&user, query, phone)
@@ -102,17 +81,5 @@ func UpdateUserRedis(phone string) {
 		userbyte, _ := json.Marshal(user)
 		redisManager.SetKey(phone, string(userbyte))
 	}
-
-}
-
-// SaveToken _
-func SaveToken(phone, token string) {
-	redisManager.SetKey(fmt.Sprintf("%s_%s", Token_REDIS_KEY, phone), token)
-
-}
-
-// GetToken _
-func GetToken(phone string) (string, error) {
-	return redisManager.GetKey(fmt.Sprintf("%s_%s", Token_REDIS_KEY, phone))
 
 }

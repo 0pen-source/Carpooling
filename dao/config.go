@@ -9,7 +9,7 @@ import (
 	"github.com/spf13/viper"
 )
 
-var config models.Configuration
+var Config models.Configuration
 
 func InitializeConfiguration() {
 	filename := os.Getenv("CARPOOLING_SERVER_CONF")
@@ -21,14 +21,14 @@ func InitializeConfiguration() {
 	viper.SetConfigFile(filename)
 
 	utils.Must(nil, viper.ReadInConfig())
-	utils.Must(nil, viper.Unmarshal(&config))
+	utils.Must(nil, viper.Unmarshal(&Config))
 }
 func GetMODE() string {
-	return config.MODE
+	return Config.MODE
 
 }
 
 func GetAddress() string {
-	return config.Address
+	return Config.Address
 
 }

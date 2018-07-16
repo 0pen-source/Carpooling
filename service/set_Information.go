@@ -41,5 +41,5 @@ func SetInformation(c *gin.Context) {
 		c.JSON(http.StatusOK, response)
 		return
 	}
-	c.Render(http.StatusOK, NewEncryptedJSONRender(response, []byte(Config.Checkcode)))
+	c.Render(http.StatusOK, NewEncryptedJSONRender(response, []byte(dao.Config.Checkcode)))
 }

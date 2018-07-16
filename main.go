@@ -38,6 +38,15 @@ func main() {
 		LoginUserGroup.POST("/upload", service.Upload)
 	}
 
+	passengers := router.Group("/v1/passengers")
+	{
+		passengers.Use(
+			service.Auth(),
+		)
+		passengers.POST("/creattrip", service.CreatTrip)
+		passengers.POST("/upload", service.Upload)
+	}
+
 	server := &http.Server{
 		Addr:    dao.GetAddress(),
 		Handler: router,
