@@ -3,6 +3,7 @@ package dao
 import (
 	"encoding/json"
 	"fmt"
+	"os"
 	"strings"
 
 	"github.com/0pen-source/Carpooling/models"
@@ -38,12 +39,27 @@ func GetUser(phone string) (user models.User, err error) {
 func SaveUser(user models.User) (err error) {
 	user.Guid = xid.New().String()
 	_, err = cacheDB.NamedExec("INSERT INTO user (phone, password, nickname, guid) VALUES (:phone, :password, :nickname, :guid)", user)
-	fmt.Println(err)
 	if err == nil {
-		userbyte, _ := json.Marshal(user)
-		redisManager.SetKey(user.Phone, string(userbyte))
+		UpdateUserRedis(user.Phone)
 	}
 	return err
+
+}
+
+func SaveImage(path, filename, imageType, phone string) {
+
+	PutObject(bucketIDCards, filename, fmt.Sprintf("%s/%s", path, filename))
+
+	os.Remove(fmt.Sprintf("%s/%s", path, filename))
+	user := models.User{
+		Phone: phone,
+	}
+	if imageType == "idcard" {
+		user.IDCardsURL = fmt.Sprintf("%s/%s", path, filename)
+	} else if imageType == "driving" {
+		user.DriverURL = fmt.Sprintf("%s/%s", path, filename)
+	}
+	SaveUser(user)
 
 }
 

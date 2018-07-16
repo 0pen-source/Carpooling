@@ -11,13 +11,13 @@ import (
 )
 
 func main() {
-	initializeConfiguration()
-	dao.InitializeRedis(config.Redis.URL, config.Redis.PoolSize)
-	dao.InitializeCache(config.CarpoolingDatabases)
+	dao.InitializeConfiguration()
+	dao.InitializeRedis()
+	dao.InitializeCache()
+	dao.InitOSSClient()
 	runtime.GOMAXPROCS(runtime.NumCPU())
-	gin.SetMode(config.MODE)
+	gin.SetMode(dao.GetMODE())
 	router := gin.Default()
-	service.Config = config
 	router.Use(
 		service.MarkTesting(),
 	)
@@ -35,10 +35,11 @@ func main() {
 			service.Auth(),
 		)
 		LoginUserGroup.POST("/setinformation", service.SetInformation)
+		LoginUserGroup.POST("/upload", service.Upload)
 	}
 
 	server := &http.Server{
-		Addr:    config.Address,
+		Addr:    dao.GetAddress(),
 		Handler: router,
 	}
 	if err := server.ListenAndServe(); err != nil {

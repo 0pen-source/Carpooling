@@ -8,12 +8,13 @@ type Phonetest struct {
 	VerificationCode string `binding:"omitempty,len=6,numeric" form:"verification_code" structs:"verification_code"`
 }
 
-// Phonetest _
-type Login struct {
+// UserMessage _
+type UserMessage struct {
 	CommonPayload `structs:",flatten"`
 
 	Phone        string `binding:"required,omitempty,len=11,numeric" form:"phone" structs:"phone"`
 	Password     string `binding:"-" form:"password" structs:"password"`
+	ImageType    string `binding:"required" form:"image_type" structs:"image_type"`
 	Nickname     string `binding:"-" form:"nickname" structs:"nickname"`
 	LastLocation string `binding:"-" form:"last_location" structs:"last_location"`
 	Sex          int    `binding:"-" form:"sex" structs:"sex"`

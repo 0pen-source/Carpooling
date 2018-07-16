@@ -9,7 +9,7 @@ import (
 )
 
 func Register(c *gin.Context) {
-	payload := models.Login{}
+	payload := models.UserMessage{}
 	if err := c.Bind(&payload); err != nil {
 		return
 	}

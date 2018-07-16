@@ -15,6 +15,12 @@ type Configuration struct {
 		URL      string `mapstructure:"url" validate:"required,redis_url"`
 		PoolSize int    `mapstructure:"pool_size" validate:"required,min=1"`
 	} `mapstructure:"redis"`
+	OSSConfig struct {
+		AccessKeyId     string `mapstructure:"AccessKeyId" validate:"required"`
+		AccessKeySecret string `mapstructure:"AccessKeySecret" validate:"required"`
+		EndPoint        string `mapstructure:"EndPoint" validate:"required"`
+		BucketIDCards   string `mapstructure:"BucketIDCards" validate:"required"`
+	} `mapstructure:"oss_config"`
 }
 
 // DB model

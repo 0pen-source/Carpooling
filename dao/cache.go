@@ -6,7 +6,6 @@ import (
 	"github.com/astaxie/beego/cache"
 	_ "github.com/go-sql-driver/mysql"
 
-	"github.com/0pen-source/Carpooling/models"
 	"github.com/jmoiron/sqlx"
 )
 
@@ -21,8 +20,8 @@ var (
 func init() {
 	mem_cache, _ = cache.NewCache("memory", `{"interval":5}`)
 }
-func InitializeCache(db models.DB) {
-	cacheDB = sqlx.MustConnect("mysql", db.DataSourceName).Unsafe()
-	cacheDB.SetMaxOpenConns(db.MaxIdleConns)
-	cacheDB.SetMaxIdleConns(db.MaxIdleConns)
+func InitializeCache() {
+	cacheDB = sqlx.MustConnect("mysql", config.CarpoolingDatabases.DataSourceName).Unsafe()
+	cacheDB.SetMaxOpenConns(config.CarpoolingDatabases.MaxIdleConns)
+	cacheDB.SetMaxIdleConns(config.CarpoolingDatabases.MaxIdleConns)
 }

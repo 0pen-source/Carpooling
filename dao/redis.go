@@ -10,9 +10,9 @@ import (
 
 var redisManager *Redis
 
-func InitializeRedis(url string, poolSize int) {
-	options := utils.Must(redis.ParseURL(url)).(*redis.Options)
-	options.PoolSize = poolSize
+func InitializeRedis() {
+	options := utils.Must(redis.ParseURL(config.Redis.URL)).(*redis.Options)
+	options.PoolSize = config.Redis.PoolSize
 	redisManager = NewRedis(redis.NewClient(options))
 }
 

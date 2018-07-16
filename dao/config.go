@@ -1,4 +1,4 @@
-package main
+package dao
 
 import (
 	"os"
@@ -11,7 +11,7 @@ import (
 
 var config models.Configuration
 
-func initializeConfiguration() {
+func InitializeConfiguration() {
 	filename := os.Getenv("CARPOOLING_SERVER_CONF")
 	if filename == "" {
 		filename = "./conf.yml"
@@ -22,4 +22,13 @@ func initializeConfiguration() {
 
 	utils.Must(nil, viper.ReadInConfig())
 	utils.Must(nil, viper.Unmarshal(&config))
+}
+func GetMODE() string {
+	return config.MODE
+
+}
+
+func GetAddress() string {
+	return config.Address
+
 }
