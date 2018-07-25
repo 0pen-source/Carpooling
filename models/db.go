@@ -35,3 +35,22 @@ type PassengersTrip struct {
 	PayPrice        int64   `db:"pay_price"`
 	Surplus         int     `db:"surplus"`
 }
+
+// DriverTrip _
+type DriverTrip struct {
+	Guid            string  `db:"guid"`
+	UserName        string  `db:"username"`
+	NickName        string  `db:"nickname"`
+	Phone           string  `db:"phone"`
+	CreateTime      int64   `db:"create_time"`
+	TravelTime      string  `db:"travel_time"`
+	TravelTimeTitle string  `db:"travel_time_title"`
+	From            string  `db:"From"`
+	FromLon         float64 `db:"from_lon"`
+	FromLat         float64 `db:"from_lat"`
+	Destination     string  `db:"destination"`
+	DestinationLon  float64 `db:"destination_lon"`
+	DestinationLat  float64 `db:"destination_lat"`
+	PayPrice        int64   `db:"pay_price"`
+	Surplus         int     `db:"surplus"`
+}

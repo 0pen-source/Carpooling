@@ -1,10 +1,11 @@
-package service
+package user
 
 import (
 	"net/http"
 
 	"github.com/0pen-source/Carpooling/dao"
 	"github.com/0pen-source/Carpooling/models"
+	"github.com/0pen-source/Carpooling/service/common"
 	"github.com/gin-gonic/gin"
 )
 
@@ -41,5 +42,5 @@ func SetInformation(c *gin.Context) {
 		c.JSON(http.StatusOK, response)
 		return
 	}
-	c.Render(http.StatusOK, NewEncryptedJSONRender(response, []byte(dao.Config.Checkcode)))
+	c.Render(http.StatusOK, common.NewEncryptedJSONRender(response, []byte(dao.Config.Checkcode)))
 }

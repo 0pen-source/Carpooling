@@ -6,7 +6,10 @@ import (
 	"runtime"
 
 	"github.com/0pen-source/Carpooling/dao"
-	"github.com/0pen-source/Carpooling/service"
+	"github.com/0pen-source/Carpooling/service/common"
+	"github.com/0pen-source/Carpooling/service/drivers"
+	"github.com/0pen-source/Carpooling/service/passengers"
+	"github.com/0pen-source/Carpooling/service/user"
 	"github.com/gin-gonic/gin"
 )
 
@@ -19,32 +22,41 @@ func main() {
 	gin.SetMode(dao.GetMODE())
 	router := gin.Default()
 	router.Use(
-		service.MarkTesting(),
+		common.MarkTesting(),
 	)
 	noLoginUserGroup := router.Group("/v1/user")
 	{
-		noLoginUserGroup.POST("/checkphone", service.Phonetest)
-		noLoginUserGroup.POST("/login", service.Login)
-		noLoginUserGroup.POST("/getcode", service.GetVerificationCode)
-		noLoginUserGroup.POST("/checkcode", service.CheckCode)
-		noLoginUserGroup.POST("/register", service.Register)
+		noLoginUserGroup.POST("/checkphone", user.Phonetest)
+		noLoginUserGroup.POST("/login", user.Login)
+		noLoginUserGroup.POST("/getcode", user.GetVerificationCode)
+		noLoginUserGroup.POST("/checkcode", user.CheckCode)
+		noLoginUserGroup.POST("/register", user.Register)
 	}
 	LoginUserGroup := router.Group("/v1/user")
 	{
 		LoginUserGroup.Use(
-			service.Auth(),
+			common.Auth(),
 		)
-		LoginUserGroup.POST("/setinformation", service.SetInformation)
-		LoginUserGroup.POST("/upload", service.Upload)
+		LoginUserGroup.POST("/setinformation", user.SetInformation)
+		LoginUserGroup.POST("/upload", user.Upload)
 	}
 
-	passengers := router.Group("/v1/passengers")
+	passenger := router.Group("/v1/passengers")
 	{
-		passengers.Use(
-			service.Auth(),
+		passenger.Use(
+			common.Auth(),
 		)
-		passengers.POST("/creattrip", service.CreatTrip)
-		passengers.POST("/upload", service.Upload)
+		passenger.POST("/creattrip", passengers.CreatTrip)
+		passenger.POST("/upload", user.Upload)
+	}
+
+	driver := router.Group("/v1/driver")
+	{
+		driver.Use(
+			common.Auth(),
+		)
+		driver.POST("/creattrip", drivers.CreatTrip)
+		driver.POST("/upload", user.Upload)
 	}
 
 	server := &http.Server{
