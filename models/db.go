@@ -20,8 +20,8 @@ type User struct {
 // PassengersTrip _
 type PassengersTrip struct {
 	Guid            string  `db:"guid"`
-	Username        string  `db:"username"`
-	Nickname        string  `db:"nickname"`
+	UserName        string  `db:"username"`
+	NickName        string  `db:"nickname"`
 	Phone           string  `db:"phone"`
 	CreateTime      int64   `db:"create_time"`
 	TravelTime      string  `db:"travel_time"`

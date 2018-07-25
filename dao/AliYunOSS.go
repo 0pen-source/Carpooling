@@ -12,7 +12,6 @@ var err error
 
 func InitOSSClient() {
 	ossClient, err = oss.New(Config.OSSConfig.EndPoint, Config.OSSConfig.AccessKeyId, Config.OSSConfig.AccessKeySecret)
-	fmt.Println("授权信息", Config.OSSConfig.EndPoint, Config.OSSConfig.AccessKeyId, Config.OSSConfig.AccessKeySecret)
 	if err != nil {
 		fmt.Println(err)
 	}

@@ -14,7 +14,7 @@ type UserMessage struct {
 
 	Phone        string `binding:"required,omitempty,len=11,numeric" form:"phone" structs:"phone"`
 	Password     string `binding:"-" form:"password" structs:"password"`
-	ImageType    string `binding:"required" form:"image_type" structs:"image_type"`
+	ImageType    string `binding:"-" form:"image_type" structs:"image_type"`
 	Nickname     string `binding:"-" form:"nickname" structs:"nickname"`
 	LastLocation string `binding:"-" form:"last_location" structs:"last_location"`
 	Sex          int    `binding:"-" form:"sex" structs:"sex"`
@@ -30,9 +30,9 @@ type TripMessage struct {
 	Phone           string  `binding:"required,omitempty,len=11,numeric" form:"phone" structs:"phone"`
 	TravelTime      string  `binding:"-" form:"travel_time" structs:"travel_time"`
 	TravelTimeTitle string  `binding:"-" form:"travel_time_title" structs:"travel_time_title"`
-	From            string  `binding:"required," form:"from" structs:"from"`
-	FromLon         float64 `binding:"-," form:"from_lon" structs:"from_lon"`
-	FromLat         float64 `binding:"-," form:"from_lat" structs:"from_lat"`
+	From            string  `binding:"required" form:"from" structs:"from"`
+	FromLon         float64 `binding:"-" form:"from_lon" structs:"from_lon"`
+	FromLat         float64 `binding:"-" form:"from_lat" structs:"from_lat"`
 	Destination     string  `binding:"required" form:"destination" structs:"destination"`
 	DestinationLon  float64 `binding:"-" form:"destination_lon" structs:"destination_lon"`
 	DestinationLat  float64 `binding:"-" form:"destination_lat" structs:"destination_lat"`

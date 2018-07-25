@@ -20,17 +20,20 @@ func GetUser(phone string) (user models.User, err error) {
 	query := "SELECT * FROM `user` where phone = ?"
 
 	userStr, err = redisManager.GetKey(phone)
+	fmt.Println(err)
+	fmt.Println(userStr)
 	if err != nil {
+	}
+	if userStr != "" {
+		json.Unmarshal([]byte(userStr), &user)
+	} else {
 		err = cacheDB.Get(&user, query, phone)
 		if err == nil {
 			userbyte, _ := json.Marshal(user)
 			redisManager.SetKey(phone, string(userbyte))
 		}
-		return user, err
-
 	}
 
-	json.Unmarshal([]byte(userStr), &user)
 	return user, nil
 
 }
@@ -104,8 +107,6 @@ func UpdateUserRedis(phone string) {
 	}
 
 }
-
-
 
 // SaveToken _
 func SaveToken(phone, token string) {

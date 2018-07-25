@@ -15,8 +15,8 @@ func CreatTrip(c *gin.Context) {
 		return
 	}
 	trip := models.PassengersTrip{
-		Username:        payload.Username,
-		Nickname:        payload.Nickname,
+		UserName:        payload.Username,
+		NickName:        payload.Nickname,
 		Phone:           payload.Phone,
 		CreateTime:      time.Now().Unix(),
 		TravelTime:      payload.TravelTime,
@@ -30,21 +30,23 @@ func CreatTrip(c *gin.Context) {
 		PayPrice:        payload.PayPrice,
 		Surplus:         payload.Surplus,
 	}
-	err := dao.SavePassengersTrip(trip)
+	trip, err := dao.SavePassengersTrip(trip)
 	response := models.Response{}
 	phonetest := models.PhoneTestResponse{}
 	if err != nil {
 		response.Code = http.StatusNotFound
-		response.Message = "注册失败，请重试"
+		response.Message = "创建行程失败，请重试"
 		phonetest.Status = false
 		response.Data = phonetest
 		c.JSON(http.StatusOK, response)
 		return
 	}
 	response.Code = http.StatusOK
-	response.Message = "注册成功，请登录"
+	response.Message = "创建行程成功，请耐心等待车主接单"
 	phonetest.Status = true
+	phonetest.ID = trip.Guid
 	response.Data = phonetest
+
 	if c.GetBool("testing") {
 		c.JSON(http.StatusOK, response)
 		return

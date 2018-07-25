@@ -1,6 +1,7 @@
 package service
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/0pen-source/Carpooling/dao"
@@ -14,6 +15,7 @@ func Phonetest(c *gin.Context) {
 		return
 	}
 	_, err := dao.GetUser(payload.Phone)
+	fmt.Println(payload.Phone)
 	response := models.Response{}
 	phonetest := models.PhoneTestResponse{}
 	if err != nil {

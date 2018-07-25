@@ -7,6 +7,7 @@ type Response struct {
 type PhoneTestResponse struct {
 	Exit   bool `json:"exit,omitempty" structs:"exit"`
 	Status bool `json:"status,omitempty" structs:"status"`
+	ID string `json:"id,omitempty" structs:"id"`
 }
 
 type LoginResponse struct {

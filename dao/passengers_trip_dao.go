@@ -30,15 +30,17 @@ func GetPassengersTrip(phone string) (user models.User, err error) {
 
 }
 
-// SavePassengersTrip _
-func SavePassengersTrip(trip models.PassengersTrip) (err error) {
+// SavePassengersTrip _ , ,`from`
+//  :from , ,
+func SavePassengersTrip(trip models.PassengersTrip) (models.PassengersTrip, error) {
 	trip.Guid = xid.New().String()
-	_, err = cacheDB.NamedExec("INSERT INTO passengers_trip (username,phone,create_time,travel_time,travel_time_title,from,from_location,destination,destination_location,pay_price,surplus,nickname,from_lon,from_lat,destination_lon,destination_lat, guid) VALUES "+
-		"(:username,:phone,:create_time,:travel_time,:travel_time_title,:from,:from_location,:destination,:destination_location,:pay_price,:surplus,:nickname,:from_lon,:from_lat,:destination_lon,:destination_lat,: guid)", trip)
+	_, err = cacheDB.NamedExec("INSERT INTO passengers_trip "+
+		"(`guid`,`username`,`nickname`,`phone`,`create_time`,`travel_time`,`travel_time_title`,`from`,`from_lon`,`from_lat`,`destination`,`pay_price`,`surplus`,`destination_lon`,`destination_lat`) VALUES "+
+		"(:guid,:username,:nickname,   :phone, :create_time, :travel_time,  :travel_time_title,:From, :from_lon, :from_lat,:destination, :pay_price, :surplus,  :destination_lon, :destination_lat)", &trip)
 	if err == nil {
 		redisManager.UpdateObject(trip.Guid, trip)
 	}
-	return err
+	return trip, err
 
 }
 
