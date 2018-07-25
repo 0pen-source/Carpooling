@@ -3,35 +3,48 @@ package dao
 import (
 	"encoding/json"
 	"fmt"
-	"strings"
+	"time"
 
 	"github.com/0pen-source/Carpooling/models"
 	"github.com/rs/xid"
 )
 
-// GetDriverTrip _
-func GetDriverTrip(phone string) (user models.User, err error) {
-	var userStr string
-	query := "SELECT * FROM `user` where phone = ?"
+// GetRealTimeTrip _
+func GetRealTimeDriverTrip() (user models.User, err error) {
+	query := "SELECT * FROM `passengers_trip` order by create_time desc limit 20"
 
-	userStr, err = redisManager.GetKey(phone)
-	if err != nil {
-		err = cacheDB.Get(&user, query, phone)
+	value, ok := memCache.Get(query).(string)
+	if !ok {
+		err = cacheDB.Get(&user, query)
 		if err == nil {
 			userbyte, _ := json.Marshal(user)
-			redisManager.SetKey(phone, string(userbyte))
+			redisManager.SetKey(query, string(userbyte))
 		}
 		return user, err
-
 	}
 
-	json.Unmarshal([]byte(userStr), &user)
+	json.Unmarshal([]byte(value), &user)
 	return user, nil
 
 }
+func GetRecommendDriverTrips(user models.User) (trips []models.ResponseTrip, err error) {
+	query := "SELECT *," +
+		"ROUND(6378.138 * 2 * ASIN(SQRT(POW(SIN((" +
+		":last_lat * PI() / 180 - from_lat * PI() / 180) / 2),2" +
+		") + COS(:last_lat * PI() / 180) * COS(from_lat * PI() / 180) * POW(SIN((:last_lon * PI() / 180 " +
+		"- from_lon * PI() / 180) / 2), 2))) * 1000) AS juli FROM driver_trip ORDER BY juli ASC limit 20"
+	fmt.Println(fmt.Sprintf("%s-%s-%s", user.LastLat, user.LastLon, "driver"))
+	trips, ok := memCache.Get(fmt.Sprintf("%s-%s-%s", user.LastLat, user.LastLon, "driver")).([]models.ResponseTrip)
+	if !ok {
+		err = cacheDB.Select(&trips, query, user)
+	}
+	memCache.Put(fmt.Sprintf("%s-%s-%s", user.LastLat, user.LastLon, "driver"), trips, time.Minute*10)
 
-// SaveDriverTrip _ , ,`from`
-//  :from , ,
+	return trips, nil
+
+}
+
+// SaveDriverTrip _
 func SaveDriverTrip(trip models.DriverTrip) (models.DriverTrip, error) {
 	trip.Guid = xid.New().String()
 	_, err = cacheDB.NamedExec("INSERT INTO driver_trip "+
@@ -41,47 +54,5 @@ func SaveDriverTrip(trip models.DriverTrip) (models.DriverTrip, error) {
 		redisManager.UpdateObject(trip.Guid, trip)
 	}
 	return trip, err
-
-}
-
-// UpdateDriverTrip _
-func UpdateDriverTrip(user models.User) (err error) {
-	sql := "UPDATE `user` set "
-	core_strings := []string{}
-
-	if user.Username != "" {
-		core_strings = append(core_strings, "username = :username")
-	}
-	if user.Password != "" {
-		core_strings = append(core_strings, "password = :password")
-	}
-	if user.Nickname != "" {
-		core_strings = append(core_strings, "nickname = :nickname")
-	}
-	if user.Sex != 0 {
-		core_strings = append(core_strings, "sex = :sex")
-	}
-	if user.LastLocation != "" {
-		core_strings = append(core_strings, "last_location = :last_location")
-	}
-	sql += strings.Join(core_strings, ",")
-	sql += " where phone = :phone"
-	fmt.Println(sql)
-	_, err = cacheDB.NamedExec(sql, user)
-	UpdateUserRedis(user.Phone)
-	fmt.Println(err)
-	return err
-
-}
-
-// UpdateDriverTripRedis _
-func UpdateDriverTripRedis(phone string) {
-	query := "SELECT * FROM `user` where phone = ?"
-	var user models.User
-	err := cacheDB.Get(&user, query, phone)
-	if err == nil {
-		userbyte, _ := json.Marshal(user)
-		redisManager.SetKey(phone, string(userbyte))
-	}
 
 }

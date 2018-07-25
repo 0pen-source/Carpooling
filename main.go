@@ -48,6 +48,8 @@ func main() {
 		)
 		passenger.POST("/creattrip", passengers.CreatTrip)
 		passenger.POST("/upload", user.Upload)
+		passenger.POST("/index", passengers.Index)
+
 	}
 
 	driver := router.Group("/v1/driver")

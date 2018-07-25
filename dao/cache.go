@@ -10,15 +10,15 @@ import (
 )
 
 var (
+	memCache                 cache.Cache
 	cacheDB                  *sqlx.DB
-	mem_cache                cache.Cache
 	CACHE_KEY_GEO_PREIFX     = `cache_tvgeo:`
 	CACHE_KEY_GRID_PREIFX    = `cache_tvgrid:`
 	CACHE_KEY_GEOHASH_PREIFX = `cache_tvgeohash:`
 )
 
 func init() {
-	mem_cache, _ = cache.NewCache("memory", `{"interval":5}`)
+	memCache, _ = cache.NewCache("memory", `{"interval":5}`)
 }
 func InitializeCache() {
 	cacheDB = sqlx.MustConnect("mysql", Config.CarpoolingDatabases.DataSourceName).Unsafe()

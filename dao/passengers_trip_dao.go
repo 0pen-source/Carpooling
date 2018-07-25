@@ -1,32 +1,43 @@
 package dao
 
 import (
-	"encoding/json"
 	"fmt"
-	"strings"
+	"time"
 
 	"github.com/0pen-source/Carpooling/models"
 	"github.com/rs/xid"
 )
 
-// GetPassengersTrip _
-func GetPassengersTrip(phone string) (user models.User, err error) {
-	var userStr string
-	query := "SELECT * FROM `user` where phone = ?"
+// GetRealTimeTrip _
+func GetRealTimePassengersTrip() (trips []models.ResponseTrip, err error) {
+	query := "SELECT * FROM `passengers_trip` order by create_time desc limit 20"
 
-	userStr, err = redisManager.GetKey(phone)
-	if err != nil {
-		err = cacheDB.Get(&user, query, phone)
-		if err == nil {
-			userbyte, _ := json.Marshal(user)
-			redisManager.SetKey(phone, string(userbyte))
-		}
-		return user, err
-
+	trips, ok := memCache.Get(query).([]models.ResponseTrip)
+	if !ok {
+		err = cacheDB.Select(&trips, query)
 	}
+	memCache.Put(query, trips, time.Hour*1)
 
-	json.Unmarshal([]byte(userStr), &user)
-	return user, nil
+	return trips, nil
+
+}
+
+//select * from users_location where latitude > '.$lat.'-1 and latitude < '.$lat.'+1 and longitude > '.$lon.'-1 and longitude < '.$lon.'+1 order by ACOS(SIN(('.$lat.' * 3.1415) / 180 ) *SIN((latitude * 3.1415) / 180 ) +COS(('.$lat.' * 3.1415) / 180 ) * COS((latitude * 3.1415) / 180 ) *COS(('.$lon.'* 3.1415) / 180 - (longitude * 3.1415) / 180 ) ) * 6380 asc limit 10
+// GetPassengersTrip _
+func GetRecommendPassengersTrips(user models.User) (trips []models.ResponseTrip, err error) {
+	query := "SELECT *," +
+		"ROUND(6378.138 * 2 * ASIN(SQRT(POW(SIN((" +
+		":last_lat * PI() / 180 - from_lat * PI() / 180) / 2),2" +
+		") + COS(:last_lat * PI() / 180) * COS(from_lat * PI() / 180) * POW(SIN((:last_lon * PI() / 180 " +
+		"- from_lon * PI() / 180) / 2), 2))) * 1000) AS juli FROM passengers_trip ORDER BY juli ASC limit 20"
+
+	trips, ok := memCache.Get(fmt.Sprintf("%s-%s-%s", user.LastLat, user.LastLon, "driver")).([]models.ResponseTrip)
+	if !ok {
+		err = cacheDB.Select(&trips, query, user)
+	}
+	memCache.Put(fmt.Sprintf("%s-%s-%s", user.LastLat, user.LastLon, "driver"), trips, time.Minute*10)
+
+	return trips, nil
 
 }
 
@@ -41,47 +52,5 @@ func SavePassengersTrip(trip models.PassengersTrip) (models.PassengersTrip, erro
 		redisManager.UpdateObject(trip.Guid, trip)
 	}
 	return trip, err
-
-}
-
-// UpdatePassengersTrip _
-func UpdatePassengersTrip(user models.User) (err error) {
-	sql := "UPDATE `user` set "
-	core_strings := []string{}
-
-	if user.Username != "" {
-		core_strings = append(core_strings, "username = :username")
-	}
-	if user.Password != "" {
-		core_strings = append(core_strings, "password = :password")
-	}
-	if user.Nickname != "" {
-		core_strings = append(core_strings, "nickname = :nickname")
-	}
-	if user.Sex != 0 {
-		core_strings = append(core_strings, "sex = :sex")
-	}
-	if user.LastLocation != "" {
-		core_strings = append(core_strings, "last_location = :last_location")
-	}
-	sql += strings.Join(core_strings, ",")
-	sql += " where phone = :phone"
-	fmt.Println(sql)
-	_, err = cacheDB.NamedExec(sql, user)
-	UpdateUserRedis(user.Phone)
-	fmt.Println(err)
-	return err
-
-}
-
-// UpdatePassengersTripRedis _
-func UpdatePassengersTripRedis(phone string) {
-	query := "SELECT * FROM `user` where phone = ?"
-	var user models.User
-	err := cacheDB.Get(&user, query, phone)
-	if err == nil {
-		userbyte, _ := json.Marshal(user)
-		redisManager.SetKey(phone, string(userbyte))
-	}
 
 }

@@ -16,12 +16,13 @@ func SetInformation(c *gin.Context) {
 	}
 
 	user := models.User{
-		Phone:        payload.Phone,
-		Password:     payload.Password,
-		Nickname:     payload.Nickname,
-		Username:     payload.Username,
-		Sex:          payload.Sex,
-		LastLocation: payload.LastLocation,
+		Phone:    payload.Phone,
+		Password: payload.Password,
+		Nickname: payload.Nickname,
+		Username: payload.Username,
+		Sex:      payload.Sex,
+		LastLat:  payload.LastLat,
+		LastLon:  payload.LastLon,
 	}
 	err := dao.UpdateUser(user)
 	response := models.Response{}

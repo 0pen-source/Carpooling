@@ -20,10 +20,6 @@ func GetUser(phone string) (user models.User, err error) {
 	query := "SELECT * FROM `user` where phone = ?"
 
 	userStr, err = redisManager.GetKey(phone)
-	fmt.Println(err)
-	fmt.Println(userStr)
-	if err != nil {
-	}
 	if userStr != "" {
 		json.Unmarshal([]byte(userStr), &user)
 	} else {
@@ -34,7 +30,7 @@ func GetUser(phone string) (user models.User, err error) {
 		}
 	}
 
-	return user, nil
+	return user, err
 
 }
 
@@ -83,8 +79,11 @@ func UpdateUser(user models.User) (err error) {
 	if user.Sex != 0 {
 		core_strings = append(core_strings, "sex = :sex")
 	}
-	if user.LastLocation != "" {
-		core_strings = append(core_strings, "last_location = :last_location")
+	if user.LastLon > 0 {
+		core_strings = append(core_strings, "last_lon = :last_lon")
+	}
+	if user.LastLat > 0 {
+		core_strings = append(core_strings, "last_lat = :last_lat")
 	}
 	sql += strings.Join(core_strings, ",")
 	sql += " where phone = :phone"

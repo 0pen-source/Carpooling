@@ -40,12 +40,13 @@ func Login(c *gin.Context) {
 
 	}
 	login := models.LoginResponse{
-		UserName:      user.Username,
-		Sex:           user.Sex,
-		Uid:           user.Guid,
-		Balance:       user.Balance,
-		NickName:      user.Nickname,
-		Last_location: user.LastLocation,
+		UserName: user.Username,
+		Sex:      user.Sex,
+		Uid:      user.Guid,
+		Balance:  user.Balance,
+		NickName: user.Nickname,
+		LastLon:  user.LastLon,
+		LastLat:  user.LastLat,
 	}
 	response.Code = http.StatusOK
 	response.Data = login
