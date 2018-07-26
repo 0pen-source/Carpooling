@@ -1,7 +1,6 @@
 package dao
 
 import (
-	"encoding/json"
 	"fmt"
 	"time"
 
@@ -9,22 +8,17 @@ import (
 	"github.com/rs/xid"
 )
 
-// GetRealTimeTrip _
-func GetRealTimeDriverTrip() (user models.User, err error) {
+// GetRealTimeDriverTrip _
+func GetRealTimeDriverTrip() (trips []models.ResponseTrip, err error) {
 	query := "SELECT * FROM `passengers_trip` order by create_time desc limit 20"
 
-	value, ok := memCache.Get(query).(string)
+	trips, ok := memCache.Get(query).([]models.ResponseTrip)
 	if !ok {
-		err = cacheDB.Get(&user, query)
-		if err == nil {
-			userbyte, _ := json.Marshal(user)
-			redisManager.SetKey(query, string(userbyte))
-		}
-		return user, err
+		err = cacheDB.Select(&trips, query)
 	}
+	memCache.Put(query, trips, time.Hour*1)
 
-	json.Unmarshal([]byte(value), &user)
-	return user, nil
+	return trips, nil
 
 }
 func GetRecommendDriverTrips(user models.User) (trips []models.ResponseTrip, err error) {

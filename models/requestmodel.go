@@ -61,6 +61,6 @@ type CommonPayload struct {
 	IMSI          string  `binding:"omitempty,len=32" form:"imsi" structs:"imsi"`
 	AndroidID     string  `binding:"omitempty,len=32" form:"android_id" structs:"android_id"`
 	AdvertisingID string  `binding:"-" form:"advertising_id" structs:"advertising_id"`
-	Lon           float64 `binding:"omitempty,numeric" form:"lon" structs:"lon"`
-	Lan           float64 `binding:"omitempty,numeric" form:"lan" structs:"lan"`
+	Lon           float64 `binding:"-" form:"lon" structs:"lon"`
+	Lan           float64 `binding:"-" form:"lan" structs:"lan"`
 }

@@ -16,7 +16,7 @@ func Index(c *gin.Context) {
 	}
 	user := models.User{
 		LastLat: payload.Lan,
-		LastLon: payload.Lan,
+		LastLon: payload.Lon,
 		Phone:   payload.Phone,
 	}
 
