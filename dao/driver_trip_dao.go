@@ -31,6 +31,7 @@ func GetRecommendDriverTrips(user models.User) (trips []models.ResponseTrip, err
 	trips, ok := memCache.Get(fmt.Sprintf("%s-%s-%s", user.LastLat, user.LastLon, "driver")).([]models.ResponseTrip)
 	if !ok {
 		err = cacheDB.Select(&trips, query, user)
+		fmt.Println(err)
 	}
 	memCache.Put(fmt.Sprintf("%s-%s-%s", user.LastLat, user.LastLon, "driver"), trips, time.Minute*10)
 
