@@ -22,27 +22,35 @@ type LoginResponse struct {
 	Exit     bool    `json:"exit,omitempty" structs:"exit"`
 }
 type IndexResponse struct {
-	RealtimeOrder  []ResponseTrip `json:"realtime_order"`
-	RecommendOrder []ResponseTrip `json:"recommend_order"`
-	banner         []ResponseTrip `json:"banner"`
+	RealtimeOrder  []ResponseTrip   `json:"realtime_order"`
+	RecommendOrder []ResponseTrip   `json:"recommend_order"`
+	Banner         []ResponseBanner `json:"banner"`
 }
 
 type ResponseTrip struct {
-	Guid            string  `json:"guid,omitempty" structs:"guid"`
-	UserName        string  `json:"username,omitempty" structs:"username"`
-	NickName        string  `json:"nickname,omitempty" structs:"nickname"`
-	Phone           string  `json:"phone,omitempty" structs:"phone"`
-	CreateTime      int64   `json:"create_time,omitempty" structs:"create_time"`
-	TravelTime      string  `json:"travel_time,omitempty" structs:"travel_time"`
-	TravelTimeTitle string  `json:"travel_time_title,omitempty" structs:"travel_time_title"`
-	From            string  `json:"from,omitempty" structs:"from"`
-	FromLon         float64 `json:"from_lon,omitempty" structs:"from_lon"`
-	FromLat         float64 `json:"from_lat,omitempty" structs:"from_lat"`
-	Destination     string  `json:"destination,omitempty" structs:"destination"`
-	DestinationLon  float64 `json:"destination_lon,omitempty" structs:"destination_lon"`
-	DestinationLat  float64 `json:"destination_lat,omitempty" structs:"destination_lat"`
-	PayPrice        int64   `json:"pay_price,omitempty" structs:"pay_price"`
-	Surplus         int     `json:"surplus,omitempty" structs:"surplus"`
+	Guid            string  `json:"guid" db:"guid"`
+	UserName        string  `json:"username" db:"username"`
+	NickName        string  `json:"nickname" db:"nickname"`
+	Phone           string  `json:"phone" db:"phone"`
+	CreateTime      int     `json:"create_time" db:"create_time"`
+	TravelTime      int     `json:"travel_time" db:"travel_time"`
+	TravelTimeTitle string  `json:"travel_time_title" db:"travel_time_title"`
+	From            string  `json:"from" db:"from"`
+	FromLon         float64 `json:"from_lon" db:"from_lon"`
+	FromLat         float64 `json:"from_lat" db:"from_lat"`
+	Destination     string  `json:"destination" db:"destination"`
+	Distance        float64 `json:"distance" db:"distance"`
+	DestinationLon  float64 `json:"destination_lon" db:"destination_lon"`
+	DestinationLat  float64 `json:"destination_lat" db:"destination_lat"`
+	PayPrice        int     `json:"pay_price" db:"pay_price"`
+	Surplus         int     `json:"surplus" db:"surplus"`
+}
+
+type ResponseBanner struct {
+	Guid      string `json:"guid" db:"guid"`
+	ImageType int    `json:"type" db:"type"`
+	Image     string `json:"image" db:"image"`
+	Click     string `json:"click" db:"click"`
 }
 
 type Upload struct {

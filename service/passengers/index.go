@@ -22,10 +22,13 @@ func Index(c *gin.Context) {
 
 	realTrip, _ := dao.GetRealTimePassengersTrip()
 	recommendTrip, _ := dao.GetRecommendDriverTrips(user)
+	banner, _ := dao.GetBanner()
+
 	response := models.Response{}
 	index := models.IndexResponse{}
 	index.RealtimeOrder = realTrip
 	index.RecommendOrder = recommendTrip
+	index.Banner = banner
 	response.Code = http.StatusOK
 	response.Message = "Index"
 	response.Data = index
