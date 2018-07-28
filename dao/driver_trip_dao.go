@@ -36,6 +36,15 @@ func GetRecommendDriverTrips(user models.User) (trips []models.ResponseTrip, err
 
 }
 
+func GetSearchDriverTrips(trip models.PassengersTrip) (trips []models.ResponseTrip, err error) {
+	query := "SELECT *,((ROUND(6378.138 * 2 * ASIN(SQRT(POW(SIN((? * PI() / 180 - from_lat * PI() / 180) / 2),2) + COS(? * PI() / 180) * COS(from_lat * PI() / 180) * POW(SIN((? * PI() / 180 - from_lon * PI() / 180) / 2), 2))) * 1000) ) + (ROUND(6378.138 * 2 * ASIN(SQRT(POW(SIN((? * PI() / 180 - from_lat * PI() / 180) / 2),2) + COS(? * PI() / 180) * COS(from_lat * PI() / 180) * POW(SIN((? * PI() / 180 - from_lon * PI() / 180) / 2), 2))) * 1000) )) AS distance  FROM driver_trip WHERE travel_time>= ? and surplus>0  ORDER BY distance ASC limit 20"
+
+	err = cacheDB.Select(&trips, query, trip.FromLat, trip.FromLat, trip.FromLon, trip.DestinationLat, trip.DestinationLat, trip.DestinationLon, trip.TravelTime)
+
+	return trips, nil
+
+}
+
 // SaveDriverTrip _
 func SaveDriverTrip(trip models.DriverTrip) (models.DriverTrip, error) {
 	trip.Guid = xid.New().String()

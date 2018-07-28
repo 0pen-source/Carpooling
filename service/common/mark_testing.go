@@ -1,6 +1,8 @@
 package common
 
 import (
+	"fmt"
+
 	"github.com/0pen-source/Carpooling/dao"
 	"github.com/0pen-source/Carpooling/models"
 	"github.com/gin-gonic/gin"
@@ -26,6 +28,8 @@ func Auth() gin.HandlerFunc {
 			return
 		}
 		token, errs := dao.GetToken(payload.Phone)
+		fmt.Println(token)
+
 		if errs != nil {
 			c.AbortWithStatusJSON(400, gin.H{
 				"error": "用户token失效",

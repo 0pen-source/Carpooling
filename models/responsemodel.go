@@ -22,9 +22,9 @@ type LoginResponse struct {
 	Exit     bool    `json:"exit,omitempty" structs:"exit"`
 }
 type IndexResponse struct {
-	RealtimeOrder  []ResponseTrip   `json:"realtime_order"`
-	RecommendOrder []ResponseTrip   `json:"recommend_order"`
-	Banner         []ResponseBanner `json:"banner"`
+	RealtimeOrder  []ResponseTrip   `json:"realtime_order,omitempty"`
+	RecommendOrder []ResponseTrip   `json:"recommend_order,omitempty"`
+	Banner         []ResponseBanner `json:"banner,omitempty"`
 }
 
 type ResponseTrip struct {

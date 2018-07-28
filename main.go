@@ -49,6 +49,7 @@ func main() {
 		passenger.POST("/creattrip", passengers.CreatTrip)
 		passenger.POST("/upload", user.Upload)
 		passenger.POST("/index", passengers.Index)
+		passenger.POST("/searchtrip", passengers.SearchTrip)
 
 	}
 
@@ -59,6 +60,8 @@ func main() {
 		)
 		driver.POST("/creattrip", drivers.CreatTrip)
 		driver.POST("/upload", user.Upload)
+		driver.POST("/index", drivers.Index)
+		driver.POST("/searchtrip", drivers.SearchTrip)
 	}
 
 	server := &http.Server{
