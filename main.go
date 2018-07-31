@@ -26,6 +26,8 @@ func main() {
 	)
 	noLoginUserGroup := router.Group("/v1/user")
 	{
+		noLoginUserGroup.POST("/creatpassengerstrip", passengers.CreatTrip)
+		noLoginUserGroup.POST("/creatdriverstrip", drivers.CreatTrip)
 		noLoginUserGroup.POST("/checkphone", user.Phonetest)
 		noLoginUserGroup.POST("/login", user.Login)
 		noLoginUserGroup.POST("/getcode", user.GetVerificationCode)

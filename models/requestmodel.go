@@ -26,20 +26,31 @@ type UserMessage struct {
 type TripMessage struct {
 	CommonPayload `structs:",flatten"`
 
-	Username        string  `binding:"-" form:"username" structs:"username"`
-	Nickname        string  `binding:"-" form:"nickname" structs:"nickname"`
-	Phone           string  `binding:"required,omitempty,len=11,numeric" form:"phone" structs:"phone"`
-	TravelTime      string  `binding:"-" form:"travel_time" structs:"travel_time"`
-	TravelTimeTitle string  `binding:"-" form:"travel_time_title" structs:"travel_time_title"`
-	From            string  `binding:"required" form:"from" structs:"from"`
-	FromLon         float64 `binding:"-" form:"from_lon" structs:"from_lon"`
-	FromLat         float64 `binding:"-" form:"from_lat" structs:"from_lat"`
-	Destination     string  `binding:"required" form:"destination" structs:"destination"`
-	DestinationLon  float64 `binding:"-" form:"destination_lon" structs:"destination_lon"`
-	DestinationLat  float64 `binding:"-" form:"destination_lat" structs:"destination_lat"`
-	PayPrice        int64   `binding:"-" form:"pay_price" structs:"pay_price"`
-	Surplus         int     `binding:"-" form:"surplus" structs:"surplus"`
-	Distance        int64   `binding:"omitempty,numeric" form:"distance" structs:"distance"`
+	Username                   string  `binding:"-" form:"username" structs:"username"`
+	Nickname                   string  `binding:"-" form:"nickname" structs:"nickname"`
+	Phone                      string  `binding:"required,omitempty,len=11,numeric" form:"phone" structs:"phone"`
+	TravelTime                 string  `binding:"-" form:"travel_time" structs:"travel_time"`
+	TravelTimeTitle            string  `binding:"-" form:"travel_time_title" structs:"travel_time_title"`
+	From                       string  `binding:"required" form:"from" structs:"from"`
+	FromLon                    float64 `binding:"-" form:"from_lon" structs:"from_lon"`
+	FromLat                    float64 `binding:"-" form:"from_lat" structs:"from_lat"`
+	Destination                string  `binding:"required" form:"destination" structs:"destination"`
+	DestinationLon             float64 `binding:"-" form:"destination_lon" structs:"destination_lon"`
+	DestinationLat             float64 `binding:"-" form:"destination_lat" structs:"destination_lat"`
+	PayPrice                   int64   `binding:"-" form:"pay_price" structs:"pay_price"`
+	Surplus                    int     `binding:"-" form:"surplus" structs:"surplus"`
+	Distance                   int64   `binding:"omitempty,numeric" form:"distance" structs:"distance"`
+	FromRegion                 string  `binding:"-" form:"from_region" structs:"from_region"`
+	FromCity                   string  `binding:"-" form:"from_city" structs:"from_city"`
+	FromAccurateAddress        string  `binding:"-" form:"from_accurate_address" structs:"from_accurate_address"`
+	FromVagueAddress           string  `binding:"-" form:"from_vague_address" structs:"from_vague_address"`
+	DestinationRegion          string  `binding:"-" form:"destination_region" structs:"destination_region"`
+	DestinationCity            string  `binding:"-" form:"destination_city" structs:"destination_city"`
+	DestinationAccurateAddress string  `binding:"-" form:"destination_accurate_address" structs:"destination_accurate_address"`
+	DestinationVagueAddress    string  `binding:"-" form:"destination_vague_address" structs:"destination_vague_address"`
+	Source                     string  `binding:"-" form:"source" structs:"source"`
+	Mileage                    float64 `binding:"omitempty,numeric" form:"mileage" structs:"mileage"`
+	SeatNum                    int     `binding:"omitempty,numeric" form:"seat_num" structs:"seat_num"`
 }
 
 type Code struct {
