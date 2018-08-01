@@ -24,6 +24,7 @@ type PassengersTrip struct {
 	UserName                   string  `db:"username"`
 	NickName                   string  `db:"nickname"`
 	Phone                      string  `db:"phone"`
+	Msg                        string  `db:"msg"`
 	CreateTime                 int64   `db:"create_time"`
 	TravelTime                 string  `db:"travel_time"`
 	TravelTimeTitle            string  `db:"travel_time_title"`
@@ -55,6 +56,7 @@ type DriverTrip struct {
 	UserName                   string  `db:"username"`
 	NickName                   string  `db:"nickname"`
 	Phone                      string  `db:"phone"`
+	Msg                        string  `db:"msg"`
 	CreateTime                 int64   `db:"create_time"`
 	TravelTime                 string  `db:"travel_time"`
 	TravelTimeTitle            string  `db:"travel_time_title"`

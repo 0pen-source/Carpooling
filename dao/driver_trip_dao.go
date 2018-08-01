@@ -51,9 +51,9 @@ func SaveDriverTrip(trip models.DriverTrip) (models.DriverTrip, error) {
 
 	_, err = cacheDB.NamedExec("INSERT INTO driver_trip "+
 		"(`guid`,`username`,`nickname`,`phone`,`create_time`,`travel_time`,`travel_time_title`,`from_lon`,`from_lat`,`pay_price`,`surplus`,`destination_lon`,`destination_lat`"+
-		",`from_region`,`from_city`,`from_accurate_address`,`from_vague_address`,`destination_region`,`destination_city`,`destination_accurate_address`,`destination_vague_address`,`source`,`mileage`,`seat_num`,`complete`) VALUES "+
+		",`from_region`,`from_city`,`from_accurate_address`,`from_vague_address`,`destination_region`,`destination_city`,`destination_accurate_address`,`destination_vague_address`,`source`,`mileage`,`seat_num`,`complete`,`msg`) VALUES "+
 		"(:guid,:username,:nickname,:phone,:create_time, :travel_time,  :travel_time_title, :from_lon, :from_lat, :pay_price, :surplus,  :destination_lon, :destination_lat"+
-		",:from_region,:from_city,:from_accurate_address,:from_vague_address,:destination_region,:destination_city,:destination_accurate_address,:destination_vague_address,:source,:mileage,:seat_num,:complete)", &trip)
+		",:from_region,:from_city,:from_accurate_address,:from_vague_address,:destination_region,:destination_city,:destination_accurate_address,:destination_vague_address,:source,:mileage,:seat_num,:complete,:msg)", &trip)
 	if err == nil {
 		redisManager.UpdateObject(trip.Guid, trip)
 	}

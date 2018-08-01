@@ -24,7 +24,7 @@ func Login(c *gin.Context) {
 		response.Message = "该电话号码未注册"
 		phonetest.Exit = false
 		response.Data = phonetest
-		c.JSON(http.StatusOK, response)
+		c.Render(http.StatusOK, common.NewEncryptedJSONRender(response, []byte(dao.Config.Checkcode)))
 		return
 
 	}
@@ -35,7 +35,7 @@ func Login(c *gin.Context) {
 		response.Message = "手机号和密码不匹配"
 		phonetest.Exit = false
 		response.Data = phonetest
-		c.JSON(http.StatusOK, response)
+		c.Render(http.StatusOK, common.NewEncryptedJSONRender(response, []byte(dao.Config.Checkcode)))
 		return
 
 	}

@@ -42,6 +42,7 @@ func CreatTrip(c *gin.Context) {
 		Mileage:                    payload.Mileage,
 		SeatNum:                    payload.SeatNum,
 		Complete:                   payload.Complete,
+		Msg:                        payload.Msg,
 	}
 	trip, err := dao.SaveDriverTrip(trip)
 	response := models.Response{}
@@ -51,7 +52,7 @@ func CreatTrip(c *gin.Context) {
 		response.Message = "创建行程失败，请重试"
 		phonetest.Status = false
 		response.Data = phonetest
-		c.JSON(http.StatusOK, response)
+		c.Render(http.StatusOK, common.NewEncryptedJSONRender(response, []byte(dao.Config.Checkcode)))
 		return
 	}
 	response.Code = http.StatusOK

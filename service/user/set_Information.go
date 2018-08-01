@@ -32,7 +32,7 @@ func SetInformation(c *gin.Context) {
 		response.Message = "更新失败，请重试"
 		phonetest.Status = false
 		response.Data = phonetest
-		c.JSON(http.StatusOK, response)
+		c.Render(http.StatusOK, common.NewEncryptedJSONRender(response, []byte(dao.Config.Checkcode)))
 		return
 	}
 	response.Code = http.StatusOK
