@@ -46,23 +46,36 @@ type PassengersTrip struct {
 	PayPrice                   int64   `db:"pay_price"`
 	Surplus                    int     `db:"surplus"`
 	SeatNum                    int     `db:"seat_num"`
+	Complete                   int     `db:"complete"`
 }
 
 // DriverTrip _
 type DriverTrip struct {
-	Guid            string  `db:"guid"`
-	UserName        string  `db:"username"`
-	NickName        string  `db:"nickname"`
-	Phone           string  `db:"phone"`
-	CreateTime      int64   `db:"create_time"`
-	TravelTime      string  `db:"travel_time"`
-	TravelTimeTitle string  `db:"travel_time_title"`
-	From            string  `db:"From"`
-	FromLon         float64 `db:"from_lon"`
-	FromLat         float64 `db:"from_lat"`
-	Destination     string  `db:"destination"`
-	DestinationLon  float64 `db:"destination_lon"`
-	DestinationLat  float64 `db:"destination_lat"`
-	PayPrice        int64   `db:"pay_price"`
-	Surplus         int     `db:"surplus"`
+	Guid                       string  `db:"guid"`
+	UserName                   string  `db:"username"`
+	NickName                   string  `db:"nickname"`
+	Phone                      string  `db:"phone"`
+	CreateTime                 int64   `db:"create_time"`
+	TravelTime                 string  `db:"travel_time"`
+	TravelTimeTitle            string  `db:"travel_time_title"`
+	From                       string  `db:"From"`
+	FromRegion                 string  `db:"from_region"`
+	FromCity                   string  `db:"from_city"`
+	FromAccurateAddress        string  `db:"from_accurate_address"`
+	FromVagueAddress           string  `db:"from_vague_address"`
+	FromLon                    float64 `db:"from_lon"`
+	FromLat                    float64 `db:"from_lat"`
+	Destination                string  `db:"destination"`
+	DestinationRegion          string  `db:"destination_region"`
+	DestinationCity            string  `db:"destination_city"`
+	DestinationAccurateAddress string  `db:"destination_accurate_address"`
+	DestinationVagueAddress    string  `db:"destination_vague_address"`
+	Source                     string  `db:"source"`
+	DestinationLon             float64 `db:"destination_lon"`
+	DestinationLat             float64 `db:"destination_lat"`
+	Mileage                    float64 `db:"mileage"`
+	PayPrice                   int64   `db:"pay_price"`
+	Surplus                    int     `db:"surplus"`
+	SeatNum                    int     `db:"seat_num"`
+	Complete                   int     `db:"complete"`
 }

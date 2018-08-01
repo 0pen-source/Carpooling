@@ -43,6 +43,7 @@ func CreatTrip(c *gin.Context) {
 		Source:                     payload.Source,
 		Mileage:                    payload.Mileage,
 		SeatNum:                    payload.SeatNum,
+		Complete:                   payload.Complete,
 	}
 	trip, err := dao.SavePassengersTrip(trip)
 	fmt.Println(err)

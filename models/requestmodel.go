@@ -39,7 +39,7 @@ type TripMessage struct {
 	DestinationLat             float64 `binding:"-" form:"destination_lat" structs:"destination_lat"`
 	PayPrice                   int64   `binding:"-" form:"pay_price" structs:"pay_price"`
 	Surplus                    int     `binding:"-" form:"surplus" structs:"surplus"`
-	Distance                   int64   `binding:"omitempty,numeric" form:"distance" structs:"distance"`
+	Distance                   int64   `binding:"-" form:"distance" structs:"distance"`
 	FromRegion                 string  `binding:"-" form:"from_region" structs:"from_region"`
 	FromCity                   string  `binding:"-" form:"from_city" structs:"from_city"`
 	FromAccurateAddress        string  `binding:"-" form:"from_accurate_address" structs:"from_accurate_address"`
@@ -49,9 +49,9 @@ type TripMessage struct {
 	DestinationAccurateAddress string  `binding:"-" form:"destination_accurate_address" structs:"destination_accurate_address"`
 	DestinationVagueAddress    string  `binding:"-" form:"destination_vague_address" structs:"destination_vague_address"`
 	Source                     string  `binding:"-" form:"source" structs:"source"`
-	Mileage                    float64 `binding:"omitempty,numeric" form:"mileage" structs:"mileage"`
-	SeatNum                    int     `binding:"omitempty,numeric" form:"seat_num" structs:"seat_num"`
-	Complete                   int     `binding:"omitempty,numeric" form:"complete" structs:"complete"`
+	Mileage                    float64 `binding:"-" form:"mileage" structs:"mileage"`
+	SeatNum                    int     `binding:"-" form:"seat_num" structs:"seat_num"`
+	Complete                   int     `binding:"-" form:"complete" structs:"complete"`
 }
 
 type Code struct {
