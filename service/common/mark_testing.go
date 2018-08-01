@@ -11,14 +11,11 @@ import (
 // MarkTesting returns a middleware that marks the request as testing
 func MarkTesting() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		fmt.Println("--------------")
 		testing := c.Request.Header.Get("Origin") == "test"
 
 		c.Set("testing", testing)
 
-		fmt.Println("--------------")
 		c.Next()
-		fmt.Println("--------------")
 	}
 }
 

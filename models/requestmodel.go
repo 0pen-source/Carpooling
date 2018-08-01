@@ -51,6 +51,7 @@ type TripMessage struct {
 	Source                     string  `binding:"-" form:"source" structs:"source"`
 	Mileage                    float64 `binding:"omitempty,numeric" form:"mileage" structs:"mileage"`
 	SeatNum                    int     `binding:"omitempty,numeric" form:"seat_num" structs:"seat_num"`
+	Complete                   int     `binding:"omitempty,numeric" form:"complete" structs:"complete"`
 }
 
 type Code struct {

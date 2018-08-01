@@ -12,13 +12,11 @@ import (
 )
 
 func CreatTrip(c *gin.Context) {
-	fmt.Println("--------------")
 	payload := models.TripMessage{}
 	if err := c.Bind(&payload); err != nil {
 		fmt.Println(err)
 		return
 	}
-	fmt.Println("--------------")
 	trip := models.PassengersTrip{
 		UserName:                   payload.Username,
 		NickName:                   payload.Nickname,
