@@ -1,6 +1,7 @@
 package passengers
 
 import (
+	"fmt"
 	"net/http"
 	"time"
 
@@ -11,10 +12,13 @@ import (
 )
 
 func CreatTrip(c *gin.Context) {
+	fmt.Println("--------------")
 	payload := models.TripMessage{}
 	if err := c.Bind(&payload); err != nil {
+		fmt.Println(err)
 		return
 	}
+	fmt.Println("--------------")
 	trip := models.PassengersTrip{
 		UserName:                   payload.Username,
 		NickName:                   payload.Nickname,
@@ -43,6 +47,7 @@ func CreatTrip(c *gin.Context) {
 		SeatNum:                    payload.SeatNum,
 	}
 	trip, err := dao.SavePassengersTrip(trip)
+	fmt.Println(err)
 	response := models.Response{}
 	phonetest := models.PhoneTestResponse{}
 	if err != nil {

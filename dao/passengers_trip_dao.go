@@ -50,15 +50,15 @@ func GetSearchPassengersTrips(trip models.PassengersTrip) (trips []models.Respon
 
 }
 
-// SavePassengersTrip _ , ,`from`
-//  :from , ,
+// SavePassengersTrip _
+//
 func SavePassengersTrip(trip models.PassengersTrip) (models.PassengersTrip, error) {
 	trip.Guid = xid.New().String()
 	_, err = cacheDB.NamedExec("INSERT INTO passengers_trip "+
-		"(`guid`,`username`,`nickname`,`phone`,`create_time`,`travel_time`,`travel_time_title`,`from`,`from_lon`,`from_lat`,`destination`,`pay_price`,`surplus`,`destination_lon`,`destination_lat`,"+
-		"`from_region`,`from_city`,`from_accurate_address`,`from_vague_address`,`destination_region`,`destination_city`,`destination_accurate_address`,`destination_vague_address`,`source`,`mileage`,`seat_num`) VALUES "+
-		"(:guid,:username,:nickname,   :phone, :create_time, :travel_time,  :travel_time_title,:From, :from_lon, :from_lat,:destination, :pay_price, :surplus,  :destination_lon, :destination_lat"+
-		":from_region,:from_city,:from_accurate_address,:from_vague_address,:destination_region,:destination_city,:destination_accurate_address,:destination_vague_address,:source,:source,:seat_num)", &trip)
+		"(`guid`,`username`,`nickname`,`phone`,`create_time`,`travel_time`,`travel_time_title`,`from_lon`,`from_lat`,`pay_price`,`surplus`,`destination_lon`,`destination_lat`"+
+		",`from_region`,`from_city`,`from_accurate_address`,`from_vague_address`,`destination_region`,`destination_city`,`destination_accurate_address`,`destination_vague_address`,`source`,`mileage`,`seat_num`) VALUES "+
+		"(:guid,:username,:nickname,:phone,:create_time, :travel_time,  :travel_time_title, :from_lon, :from_lat, :pay_price, :surplus,  :destination_lon, :destination_lat"+
+		",:from_region,:from_city,:from_accurate_address,:from_vague_address,:destination_region,:destination_city,:destination_accurate_address,:destination_vague_address,:source,:mileage,:seat_num)", &trip)
 	if err == nil {
 		redisManager.UpdateObject(trip.Guid, trip)
 	}

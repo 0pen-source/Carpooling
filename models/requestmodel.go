@@ -28,18 +28,18 @@ type TripMessage struct {
 
 	Username                   string  `binding:"-" form:"username" structs:"username"`
 	Nickname                   string  `binding:"-" form:"nickname" structs:"nickname"`
-	Phone                      string  `binding:"required,omitempty,len=11,numeric" form:"phone" structs:"phone"`
+	Phone                      string  `binding:"-" form:"phone" structs:"phone"`
 	TravelTime                 string  `binding:"-" form:"travel_time" structs:"travel_time"`
 	TravelTimeTitle            string  `binding:"-" form:"travel_time_title" structs:"travel_time_title"`
-	From                       string  `binding:"required" form:"from" structs:"from"`
+	From                       string  `binding:"-" form:"from" structs:"from"`
 	FromLon                    float64 `binding:"-" form:"from_lon" structs:"from_lon"`
 	FromLat                    float64 `binding:"-" form:"from_lat" structs:"from_lat"`
-	Destination                string  `binding:"required" form:"destination" structs:"destination"`
+	Destination                string  `binding:"-" form:"destination" structs:"destination"`
 	DestinationLon             float64 `binding:"-" form:"destination_lon" structs:"destination_lon"`
 	DestinationLat             float64 `binding:"-" form:"destination_lat" structs:"destination_lat"`
 	PayPrice                   int64   `binding:"-" form:"pay_price" structs:"pay_price"`
 	Surplus                    int     `binding:"-" form:"surplus" structs:"surplus"`
-	Distance                   int64   `binding:"omitempty,numeric" form:"distance" structs:"distance"`
+	Distance                   int64   `binding:"-" form:"distance" structs:"distance"`
 	FromRegion                 string  `binding:"-" form:"from_region" structs:"from_region"`
 	FromCity                   string  `binding:"-" form:"from_city" structs:"from_city"`
 	FromAccurateAddress        string  `binding:"-" form:"from_accurate_address" structs:"from_accurate_address"`
@@ -49,8 +49,8 @@ type TripMessage struct {
 	DestinationAccurateAddress string  `binding:"-" form:"destination_accurate_address" structs:"destination_accurate_address"`
 	DestinationVagueAddress    string  `binding:"-" form:"destination_vague_address" structs:"destination_vague_address"`
 	Source                     string  `binding:"-" form:"source" structs:"source"`
-	Mileage                    float64 `binding:"omitempty,numeric" form:"mileage" structs:"mileage"`
-	SeatNum                    int     `binding:"omitempty,numeric" form:"seat_num" structs:"seat_num"`
+	Mileage                    float64 `binding:"-" form:"mileage" structs:"mileage"`
+	SeatNum                    int     `binding:"-" form:"seat_num" structs:"seat_num"`
 }
 
 type Code struct {
@@ -66,11 +66,11 @@ type Index struct {
 // CommonPayload _
 // it shouldn't be exported but it fails to bind, not familiar with go 1.8.3 features
 type CommonPayload struct {
-	IDFA          string  `binding:"omitempty,ne=00000000-0000-0000-0000-000000000000" form:"idfa" structs:"idfa"`
-	MACAddress    string  `binding:"omitempty,len=32" form:"mac_address" structs:"mac_address"`
-	IMEI          string  `binding:"omitempty,len=32" form:"imei" structs:"imei"`
-	IMSI          string  `binding:"omitempty,len=32" form:"imsi" structs:"imsi"`
-	AndroidID     string  `binding:"omitempty,len=32" form:"android_id" structs:"android_id"`
+	IDFA          string  `binding:"-" form:"idfa" structs:"idfa"`
+	MACAddress    string  `binding:"-" form:"mac_address" structs:"mac_address"`
+	IMEI          string  `binding:"-" form:"imei" structs:"imei"`
+	IMSI          string  `binding:"-" form:"imsi" structs:"imsi"`
+	AndroidID     string  `binding:"-" form:"android_id" structs:"android_id"`
 	AdvertisingID string  `binding:"-" form:"advertising_id" structs:"advertising_id"`
 	Lon           float64 `binding:"-" form:"lon" structs:"lon"`
 	Lat           float64 `binding:"-" form:"lat" structs:"lat"`
