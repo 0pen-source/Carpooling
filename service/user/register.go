@@ -27,6 +27,10 @@ func Register(c *gin.Context) {
 		response.Message = "注册失败，请重试"
 		phonetest.Status = false
 		response.Data = phonetest
+		if c.GetBool("testing") {
+			c.JSON(http.StatusOK, response)
+			return
+		}
 		c.Render(http.StatusOK, common.NewEncryptedJSONRender(response, []byte(dao.Config.Checkcode)))
 		return
 	}
