@@ -28,22 +28,30 @@ type IndexResponse struct {
 }
 
 type ResponseTrip struct {
-	Guid            string  `json:"guid" db:"guid"`
-	UserName        string  `json:"username" db:"username"`
-	NickName        string  `json:"nickname" db:"nickname"`
-	Phone           string  `json:"phone" db:"phone"`
-	CreateTime      int     `json:"create_time" db:"create_time"`
-	TravelTime      int     `json:"travel_time" db:"travel_time"`
-	TravelTimeTitle string  `json:"travel_time_title" db:"travel_time_title"`
-	From            string  `json:"from" db:"from"`
-	FromLon         float64 `json:"from_lon" db:"from_lon"`
-	FromLat         float64 `json:"from_lat" db:"from_lat"`
-	Destination     string  `json:"destination" db:"destination"`
-	Distance        float64 `json:"distance" db:"distance"`
-	DestinationLon  float64 `json:"destination_lon" db:"destination_lon"`
-	DestinationLat  float64 `json:"destination_lat" db:"destination_lat"`
-	PayPrice        int     `json:"pay_price" db:"pay_price"`
-	Surplus         int     `json:"surplus" db:"surplus"`
+	Guid                       string  `json:"guid" db:"guid"`
+	UserName                   string  `json:"username" db:"username"`
+	NickName                   string  `json:"nickname" db:"nickname"`
+	Phone                      string  `json:"phone" db:"phone"`
+	CreateTime                 int     `json:"create_time" db:"create_time"`
+	TravelTime                 int     `json:"travel_time" db:"travel_time"`
+	TravelTimeTitle            string  `json:"travel_time_title" db:"travel_time_title"`
+	From                       string  `json:"from" db:"from"`
+	FromRegion                 string  `json:"from_region" db:"from_region"`
+	FromCity                   string  `json:"from_city" db:"from_city"`
+	FromAccurateAddress        string  `json:"from_accurate_address" db:"from_accurate_address"`
+	FromVagueAddress           string  `json:"from_vague_address" db:"from_vague_address"`
+	FromLon                    float64 `json:"from_lon" db:"from_lon"`
+	FromLat                    float64 `json:"from_lat" db:"from_lat"`
+	Destination                string  `json:"destination" db:"destination"`
+	DestinationRegion          string  `json:"destination_region" db:"destination_region"`
+	DestinationCity            string  `json:"destination_city" db:"destination_city"`
+	DestinationAccurateAddress string  `json:"destination_accurate_address" db:"destination_accurate_address"`
+	DestinationVagueAddress    string  `json:"destination_vague_address" db:"destination_vague_address"`
+	Distance                   float64 `json:"distance" db:"distance"`
+	DestinationLon             float64 `json:"destination_lon" db:"destination_lon"`
+	DestinationLat             float64 `json:"destination_lat" db:"destination_lat"`
+	PayPrice                   int     `json:"pay_price" db:"pay_price"`
+	Surplus                    int     `json:"surplus" db:"surplus"`
 }
 
 type ResponseBanner struct {
