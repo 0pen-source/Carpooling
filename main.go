@@ -24,6 +24,10 @@ func main() {
 	router.Use(
 		common.MarkTesting(),
 	)
+	webServer := router.Group("/v1/webserver")
+	{
+		webServer.POST("/searchtrip", passengers.SearchTrip)
+	}
 	noLoginUserGroup := router.Group("/v1/user")
 	{
 		noLoginUserGroup.POST("/creatpassengerstrip", passengers.CreatTrip)

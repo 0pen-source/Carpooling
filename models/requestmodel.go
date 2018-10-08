@@ -28,7 +28,7 @@ type TripMessage struct {
 
 	Username                   string  `binding:"-" form:"username" structs:"username"`
 	Nickname                   string  `binding:"-" form:"nickname" structs:"nickname"`
-	Phone                      string  `binding:"required,omitempty,len=11,numeric" form:"phone" structs:"phone"`
+	Phone                      string  `binding:"-" form:"phone" structs:"phone"`
 	TravelTime                 string  `binding:"-" form:"travel_time" structs:"travel_time"`
 	TravelTimeTitle            string  `binding:"-" form:"travel_time_title" structs:"travel_time_title"`
 	From                       string  `binding:"-" form:"from" structs:"from"`
