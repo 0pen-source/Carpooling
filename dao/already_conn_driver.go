@@ -8,7 +8,7 @@ import (
 )
 
 func GetConnDrivers(user models.User) (trips []models.ResponseTrip, err error) {
-	query := "SELECT * from already_conn_passengers INNER join driver_trip on already_conn_passengers.guid=driver_trip.guid  where already_conn_passengers.phone = ?"
+	query := "SELECT * from already_conn_passengers INNER join passengers_trip on already_conn_passengers.guid=passengers_trip.guid  where already_conn_passengers.phone = ?"
 	trips, ok := memCache.Get(fmt.Sprintf("%s-%s", user.Phone, "already_conn_driver")).([]models.ResponseTrip)
 	if !ok {
 		err = cacheDB.Select(&trips, query, user.Phone)
