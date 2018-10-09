@@ -22,6 +22,11 @@ type UserMessage struct {
 	Username  string  `binding:"-" form:"username" structs:"username"`
 }
 
+type Connected struct {
+	Guid  string `binding:"-" form:"guid" structs:"guid"`
+	Phone string `binding:"-" form:"phone" structs:"phone"`
+}
+
 // UserMessage _
 type TripMessage struct {
 	CommonPayload `structs:",flatten"`

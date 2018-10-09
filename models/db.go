@@ -50,6 +50,13 @@ type PassengersTrip struct {
 	Complete                   int     `db:"complete"`
 }
 
+// AlreadyConnDriver _
+type AlreadyConnDriver struct {
+	Guid       string `db:"guid"`
+	Phone      string `db:"phone"`
+	UpdateTime int64  `db:"update_time"`
+}
+
 // DriverTrip _
 type DriverTrip struct {
 	Guid                       string  `db:"guid"`
