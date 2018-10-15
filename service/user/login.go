@@ -49,15 +49,19 @@ func Login(c *gin.Context) {
 	}
 	token := xid.New().String()
 	login := models.LoginResponse{
-		UserName: user.Username,
-		Sex:      user.Sex,
-		Uid:      user.Guid,
-		Balance:  user.Balance,
-		NickName: user.Nickname,
-		LastLon:  user.LastLon,
-		LastLat:  user.LastLat,
-		Token:    token,
-
+		UserName:           user.Username,
+		Sex:                user.Sex,
+		Uid:                user.Guid,
+		Balance:            user.Balance,
+		NickName:           user.Nickname,
+		LastLon:            user.LastLon,
+		LastLat:            user.LastLat,
+		Token:              token,
+		Phone:              user.Phone,
+		IDCardsURL:         user.IDCardsURL,
+		DriverURL:          user.DriverURL,
+		RealNameAuthStatus: user.RealNameAuthStatus,
+		DriverAuthStatus:   user.DriverAuthStatus,
 	}
 	response.Code = http.StatusOK
 	response.Data = login
