@@ -28,11 +28,11 @@ func Auth() gin.HandlerFunc {
 			return
 		}
 		token, errs := dao.GetToken(payload.Phone)
-		fmt.Println(token)
+		fmt.Println(errs.Error())
 
 		if errs != nil {
 			c.AbortWithStatusJSON(400, gin.H{
-				"error": "用户token失效",
+				"error": fmt.Sprintf("%s_%s","用户token失效",errs.Error()),
 			})
 			return
 		}
