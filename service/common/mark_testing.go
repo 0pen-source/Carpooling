@@ -28,7 +28,6 @@ func Auth() gin.HandlerFunc {
 			return
 		}
 		token, errs := dao.GetToken(payload.Phone)
-		fmt.Println(errs.Error())
 
 		if errs != nil {
 			c.AbortWithStatusJSON(400, gin.H{
