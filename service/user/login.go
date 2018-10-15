@@ -57,6 +57,7 @@ func Login(c *gin.Context) {
 		LastLon:  user.LastLon,
 		LastLat:  user.LastLat,
 		Token:    token,
+
 	}
 	response.Code = http.StatusOK
 	response.Data = login

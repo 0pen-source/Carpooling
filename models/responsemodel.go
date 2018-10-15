@@ -11,15 +11,20 @@ type PhoneTestResponse struct {
 }
 
 type LoginResponse struct {
-	Token    string  `json:"token,omitempty" structs:"token"`
-	Uid      string  `json:"uid,omitempty" structs:"uid"`
-	Sex      int     `json:"sex,omitempty" structs:"sex"`
-	Balance  int64   `json:"balance,omitempty" structs:"balance"`
-	UserName string  `json:"username,omitempty" structs:"username"`
-	NickName string  `json:"nickname,omitempty" structs:"nickname"`
-	LastLon  float64 `json:"last_lon,omitempty" structs:"last_location"`
-	LastLat  float64 `json:"last_lat,omitempty" structs:"last_location"`
-	Exit     bool    `json:"exit,omitempty" structs:"exit"`
+	Token              string  `json:"token,omitempty" structs:"token"`
+	Uid                string  `json:"uid,omitempty" structs:"uid"`
+	Sex                int     `json:"sex,omitempty" structs:"sex"`
+	Balance            int64   `json:"balance,omitempty" structs:"balance"`
+	UserName           string  `json:"username,omitempty" structs:"username"`
+	NickName           string  `json:"nickname,omitempty" structs:"nickname"`
+	LastLon            float64 `json:"last_lon,omitempty" structs:"last_location"`
+	LastLat            float64 `json:"last_lat,omitempty" structs:"last_location"`
+	Exit               bool    `json:"exit,omitempty" structs:"exit"`
+	Phone              string  `json:"phone" db:"phone"`
+	IDCardsURL         string  `json:"id_cards_url" db:"id_cards_url"`
+	DriverURL          string  `json:"driver_url" db:"driver_url"`
+	RealNameAuthStatus int     `json:"real_name_auth_status" db:"real_name_auth_status"`
+	DriverAuthStatus   int     `json:"driver_auth_status" db:"driver_auth_status"`
 }
 type IndexResponse struct {
 	RealtimeOrder  []ResponseTrip   `json:"realtime_order,omitempty"`
