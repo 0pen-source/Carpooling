@@ -9,7 +9,8 @@ import (
 
 func GetConnPassengers(user models.User) (trips []models.ResponseTrip, err error) {
 	query := "SELECT * from already_conn_driver INNER join driver_trip on already_conn_driver.guid=driver_trip.guid  where already_conn_driver.phone = ?"
-	trips, ok := memCache.Get(fmt.Sprintf("%s-%s", user.Phone, "already_conn_driver")).([]models.ResponseTrip)
+	var ok bool
+	trips, ok = memCache.Get(fmt.Sprintf("%s-%s", user.Phone, "already_conn_driver")).([]models.ResponseTrip)
 	if !ok {
 		err = cacheDB.Select(&trips, query, user.Phone)
 	}
