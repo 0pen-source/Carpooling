@@ -45,7 +45,9 @@ func GetConnecteds(c *gin.Context) {
 
 	response := models.Response{}
 	var index []models.ResponseTrip
-	index = trips
+	if trips != nil {
+		index = trips
+	}
 	response.Code = http.StatusOK
 	response.Message = "GetConnecteds"
 	response.Data = index
