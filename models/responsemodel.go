@@ -1,8 +1,8 @@
 package models
 
 type Response struct {
-	Commonresponse   `structs:",flatten"`
-	Data interface{} `json:"data" structs:"data"`
+	Commonresponse    `structs:",flatten"`
+	Data  interface{} `json:"data" structs:"data"`
 }
 type PhoneTestResponse struct {
 	Exit   bool   `json:"exit,omitempty" structs:"exit"`

@@ -49,11 +49,11 @@ func GetConnecteds(c *gin.Context) {
 	if trips != nil {
 		fmt.Println("不为null")
 		index = trips
+		response.Data = index
 	}
 	fmt.Println("为null")
 	response.Code = http.StatusOK
 	response.Message = "GetConnecteds"
-	response.Data = index
 
 	if c.GetBool("testing") {
 		c.JSON(http.StatusOK, response)
