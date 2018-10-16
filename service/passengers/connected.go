@@ -1,6 +1,7 @@
 package passengers
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/0pen-source/Carpooling/dao"
@@ -46,6 +47,7 @@ func GetConnecteds(c *gin.Context) {
 	response := models.Response{}
 	var index []models.ResponseTrip
 	if trips != nil {
+		fmt.Println("不为null")
 		index = trips
 	}
 	response.Code = http.StatusOK
