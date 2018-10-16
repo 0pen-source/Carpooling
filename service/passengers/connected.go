@@ -54,7 +54,6 @@ func GetConnecteds(c *gin.Context) {
 		}{}
 	}
 
-	fmt.Println("为null")
 	response.Code = http.StatusOK
 	response.Message = "GetConnecteds"
 

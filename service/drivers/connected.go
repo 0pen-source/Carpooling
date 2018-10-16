@@ -48,7 +48,13 @@ func GetConnecteds(c *gin.Context) {
 	index = trips
 	response.Code = http.StatusOK
 	response.Message = "GetConnecteds"
-	response.Data = index
+	if trips != nil {
+		index = trips
+		response.Data = index
+	} else {
+		response.Data = struct {
+		}{}
+	}
 
 	if c.GetBool("testing") {
 		c.JSON(http.StatusOK, response)
