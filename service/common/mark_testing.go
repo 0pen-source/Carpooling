@@ -2,7 +2,6 @@ package common
 
 import (
 	"fmt"
-	"net/http"
 
 	"github.com/0pen-source/Carpooling/dao"
 	"github.com/0pen-source/Carpooling/models"
@@ -30,25 +29,16 @@ func Auth() gin.HandlerFunc {
 		}
 		token, errs := dao.GetToken(payload.Phone)
 
-		response := models.Response{}
 		if errs != nil {
-			response.Message = fmt.Sprintf("%s_%s", "用户token失效", errs.Error())
-			response.Code = 400
-			if c.GetBool("testing") {
-				c.JSON(http.StatusOK, response)
-				return
-			}
-			c.Render(http.StatusBadRequest, NewEncryptedJSONRender(response, []byte(dao.Config.Checkcode)))
+			c.AbortWithStatusJSON(400, gin.H{
+				"error": fmt.Sprintf("%s_%s","用户token失效",errs.Error()),
+			})
 			return
 		}
 		if token != requestToken {
-			response.Message = "用户token失效"
-			response.Code = 400
-			if c.GetBool("testing") {
-				c.JSON(http.StatusOK, response)
-				return
-			}
-			c.Render(http.StatusBadRequest, NewEncryptedJSONRender(response, []byte(dao.Config.Checkcode)))
+			c.AbortWithStatusJSON(400, gin.H{
+				"error": "用户token失效",
+			})
 			return
 
 		}
