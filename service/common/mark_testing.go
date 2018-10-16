@@ -34,16 +34,24 @@ func Auth() gin.HandlerFunc {
 		if errs != nil {
 			response.Message = fmt.Sprintf("%s_%s", "用户token失效", errs.Error())
 			response.Code = 400
+			if c.GetBool("testing") {
+				c.JSON(http.StatusOK, response)
+				return
+			}
 			c.Render(http.StatusBadRequest, NewEncryptedJSONRender(response, []byte(dao.Config.Checkcode)))
 			return
 		}
 		if token != requestToken {
 			response.Message = "用户token失效"
 			response.Code = 400
+			if c.GetBool("testing") {
+				c.JSON(http.StatusOK, response)
+				return
+			}
 			c.Render(http.StatusBadRequest, NewEncryptedJSONRender(response, []byte(dao.Config.Checkcode)))
-
 			return
 
 		}
+		c.Next()
 	}
 }
