@@ -29,7 +29,7 @@ func GetRecommendPassengersTrips(user models.User) (trips []models.ResponseTrip,
 		"ROUND(6378.138 * 2 * ASIN(SQRT(POW(SIN((" +
 		":last_lat * PI() / 180 - from_lat * PI() / 180) / 2),2" +
 		") + COS(:last_lat * PI() / 180) * COS(from_lat * PI() / 180) * POW(SIN((:last_lon * PI() / 180 " +
-		"- from_lon * PI() / 180) / 2), 2))) * 1000) AS juli FROM passengers_trip ORDER BY juli ASC limit 20"
+		"- from_lon * PI() / 180) / 2), 2))) * 1000) AS juli FROM passengers_trip where travel_time>=unix_timestamp(now())  ORDER BY juli ASC limit 20"
 
 	trips, ok := memCache.Get(fmt.Sprintf("%s-%s-%s", user.LastLat, user.LastLon, "driver")).([]models.ResponseTrip)
 	if !ok {
