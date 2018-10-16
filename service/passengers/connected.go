@@ -1,7 +1,6 @@
 package passengers
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/0pen-source/Carpooling/dao"
