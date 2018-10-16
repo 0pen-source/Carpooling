@@ -47,10 +47,13 @@ func GetConnecteds(c *gin.Context) {
 	response := models.Response{}
 	var index []models.ResponseTrip
 	if trips != nil {
-		fmt.Println("不为null")
 		index = trips
 		response.Data = index
+	} else {
+		response.Data = struct {
+		}{}
 	}
+
 	fmt.Println("为null")
 	response.Code = http.StatusOK
 	response.Message = "GetConnecteds"
