@@ -82,7 +82,7 @@ func GetPhoneBYGUID(message models.Connected) (trips models.ResponseConnected, e
 	query := "SELECT * FROM passengers_trip where guid=? "
 
 	err = cacheDB.Select(&trips, query, message.Guid)
-
+	fmt.Println(err)
 	return trips, nil
 
 }
