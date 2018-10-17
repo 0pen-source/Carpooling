@@ -73,7 +73,7 @@ func GetMyDriverTrip(user models.User) (trips []models.ResponseTrip, err error) 
 	return trips, nil
 
 }
-func GetPhoneBYDriveerTripGUID(message models.Connected) (trips models.ResponseConnected, err error) {
+func GetPhoneBYDriveerTripGUID(message models.Connected) (trips []models.ResponseConnected, err error) {
 	query := "SELECT * FROM driver_trip where guid=?  "
 	err=cacheDB.Select(&trips, query, message.Guid)
 	fmt.Println(err)
