@@ -65,3 +65,15 @@ func SavePassengersTrip(trip models.PassengersTrip) (models.PassengersTrip, erro
 	return trip, err
 
 }
+func GetMyTrip(user models.User) (trips []models.ResponseTrip, err error) {
+	query := "SELECT * FROM passengers_trip where phone=:phone  ORDER BY create_time desc limit 20"
+
+	trips, ok := memCache.Get(fmt.Sprintf("%s-%s", user.Phone, "my_trip_passenger")).([]models.ResponseTrip)
+	if !ok {
+		err = cacheDB.Select(&trips, query, user)
+	}
+	memCache.Put(fmt.Sprintf("%s-%s", user.Phone, "my_trip_passenger"), trips, time.Minute*10)
+
+	return trips, nil
+
+}

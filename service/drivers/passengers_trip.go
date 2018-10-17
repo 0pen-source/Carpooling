@@ -67,3 +67,28 @@ func CreatTrip(c *gin.Context) {
 	}
 	c.Render(http.StatusOK, common.NewEncryptedJSONRender(response, []byte(dao.Config.Checkcode)))
 }
+func MyTrip(c *gin.Context) {
+	payload := models.UserMessage{}
+	if err := c.Bind(&payload); err != nil {
+		return
+	}
+	user := models.User{
+		Phone: payload.Phone,
+	}
+	trips, _ := dao.GetMyDriverTrip(user)
+	response := models.Response{}
+	var index []models.ResponseTrip
+	if trips != nil {
+		index = trips
+		response.Data = index
+	} else {
+		response.Data = struct {
+		}{}
+	}
+
+	if c.GetBool("testing") {
+		c.JSON(http.StatusOK, response)
+		return
+	}
+	c.Render(http.StatusOK, common.NewEncryptedJSONRender(response, []byte(dao.Config.Checkcode)))
+}

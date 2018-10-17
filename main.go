@@ -58,6 +58,7 @@ func main() {
 		passenger.POST("/searchtrip", passengers.SearchTrip)
 		passenger.POST("/connected", passengers.Connected)
 		passenger.POST("/getconnected", passengers.GetConnecteds)
+		passenger.POST("/mytrip", passengers.MyTrip)
 
 	}
 
@@ -72,6 +73,7 @@ func main() {
 		driver.POST("/searchtrip", drivers.SearchTrip)
 		driver.POST("/connected", drivers.Connected)
 		driver.POST("/getconnected", drivers.GetConnecteds)
+		driver.POST("/mytrip", drivers.MyTrip)
 	}
 
 	server := &http.Server{
