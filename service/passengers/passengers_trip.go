@@ -96,3 +96,20 @@ func MyTrip(c *gin.Context) {
 	}
 	c.Render(http.StatusOK, common.NewEncryptedJSONRender(response, []byte(dao.Config.Checkcode)))
 }
+func GetPhone(c *gin.Context) {
+	payload := models.Connected{}
+	if err := c.Bind(&payload); err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	trips, _ := dao.GetPhoneBYGUID(payload)
+	response := models.Response{}
+	response.Data = trips
+
+	if c.GetBool("testing") {
+		c.JSON(http.StatusOK, response)
+		return
+	}
+	c.Render(http.StatusOK, common.NewEncryptedJSONRender(response, []byte(dao.Config.Checkcode)))
+}

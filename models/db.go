@@ -10,12 +10,12 @@ type User struct {
 	Username           string  `db:"username"`
 	Password           string  `db:"password"`
 	Nickname           string  `db:"nickname"`
-	Sex                int     `db:"sex"`
+	Sex                int64    `db:"sex"`
 	Balance            int64   `db:"balance"`
 	LastLat            float64 `db:"last_lat"`
 	LastLon            float64 `db:"last_lon"`
-	RealNameAuthStatus int     `db:"real_name_auth_status"`
-	DriverAuthStatus   int     `db:"driver_auth_status"`
+	RealNameAuthStatus int64    `db:"real_name_auth_status"`
+	DriverAuthStatus   int64    `db:"driver_auth_status"`
 }
 
 // PassengersTrip _
@@ -45,9 +45,9 @@ type PassengersTrip struct {
 	DestinationLat             float64 `db:"destination_lat"`
 	Mileage                    float64 `db:"mileage"`
 	PayPrice                   int64   `db:"pay_price"`
-	Surplus                    int     `db:"surplus"`
-	SeatNum                    int     `db:"seat_num"`
-	Complete                   int     `db:"complete"`
+	Surplus                    int64    `db:"surplus"`
+	SeatNum                    int64    `db:"seat_num"`
+	Complete                   int64    `db:"complete"`
 }
 
 // AlreadyConnDriver _
@@ -84,7 +84,7 @@ type DriverTrip struct {
 	DestinationLat             float64 `db:"destination_lat"`
 	Mileage                    float64 `db:"mileage"`
 	PayPrice                   int64   `db:"pay_price"`
-	Surplus                    int     `db:"surplus"`
-	SeatNum                    int     `db:"seat_num"`
-	Complete                   int     `db:"complete"`
+	Surplus                    int64    `db:"surplus"`
+	SeatNum                    int64    `db:"seat_num"`
+	Complete                   int64    `db:"complete"`
 }

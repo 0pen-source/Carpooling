@@ -15,6 +15,8 @@ func getsql(sql string, paras ...interface{}) string {
 	return sql
 }
 
+
+
 func paraToString(para interface{}) string {
 	var newstr string
 

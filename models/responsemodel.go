@@ -1,8 +1,8 @@
 package models
 
 type Response struct {
-	Commonresponse    `structs:",flatten"`
-	Data  interface{} `json:"data" structs:"data"`
+	Commonresponse   `structs:",flatten"`
+	Data interface{} `json:"data" structs:"data"`
 }
 type PhoneTestResponse struct {
 	Exit   bool   `json:"exit,omitempty" structs:"exit"`
@@ -13,7 +13,7 @@ type PhoneTestResponse struct {
 type LoginResponse struct {
 	Token              string  `json:"token,omitempty" structs:"token"`
 	Uid                string  `json:"uid,omitempty" structs:"uid"`
-	Sex                int     `json:"sex,omitempty" structs:"sex"`
+	Sex                int64   `json:"sex,omitempty" structs:"sex"`
 	Balance            int64   `json:"balance,omitempty" structs:"balance"`
 	UserName           string  `json:"username,omitempty" structs:"username"`
 	NickName           string  `json:"nickname,omitempty" structs:"nickname"`
@@ -23,8 +23,8 @@ type LoginResponse struct {
 	Phone              string  `json:"phone" db:"phone"`
 	IDCardsURL         string  `json:"id_cards_url" db:"id_cards_url"`
 	DriverURL          string  `json:"driver_url" db:"driver_url"`
-	RealNameAuthStatus int     `json:"real_name_auth_status" db:"real_name_auth_status"`
-	DriverAuthStatus   int     `json:"driver_auth_status" db:"driver_auth_status"`
+	RealNameAuthStatus int64   `json:"real_name_auth_status" db:"real_name_auth_status"`
+	DriverAuthStatus   int64   `json:"driver_auth_status" db:"driver_auth_status"`
 }
 type IndexResponse struct {
 	RealtimeOrder  []ResponseTrip   `json:"realtime_order,omitempty"`
@@ -33,12 +33,12 @@ type IndexResponse struct {
 }
 
 type ResponseTrip struct {
-	Guid                       string  `json:"guid" db:"guid"`
-	UserName                   string  `json:"username" db:"username"`
-	NickName                   string  `json:"nickname" db:"nickname"`
-	Phone                      string  `json:"phone" db:"phone"`
-	CreateTime                 int     `json:"create_time" db:"create_time"`
-	TravelTime                 int     `json:"travel_time" db:"travel_time"`
+	Guid     string `json:"guid" db:"guid"`
+	UserName string `json:"username" db:"username"`
+	NickName string `json:"nickname" db:"nickname"`
+	//Phone                      string  `json:"phone" db:"phone"`
+	CreateTime                 int64   `json:"create_time" db:"create_time"`
+	TravelTime                 int64   `json:"travel_time" db:"travel_time"`
 	TravelTimeTitle            string  `json:"travel_time_title" db:"travel_time_title"`
 	From                       string  `json:"from" db:"from"`
 	FromRegion                 string  `json:"from_region" db:"from_region"`
@@ -55,13 +55,17 @@ type ResponseTrip struct {
 	Distance                   float64 `json:"distance" db:"distance"`
 	DestinationLon             float64 `json:"destination_lon" db:"destination_lon"`
 	DestinationLat             float64 `json:"destination_lat" db:"destination_lat"`
-	PayPrice                   int     `json:"pay_price" db:"pay_price"`
-	Surplus                    int     `json:"surplus" db:"surplus"`
+	PayPrice                   int64   `json:"pay_price" db:"pay_price"`
+	Surplus                    int64   `json:"surplus" db:"surplus"`
+}
+type ResponseConnected struct {
+	Guid  string `json:"guid" db:"guid"`
+	Phone string `json:"phone" db:"phone"`
 }
 
 type ResponseBanner struct {
 	Guid      string `json:"guid" db:"guid"`
-	ImageType int    `json:"type" db:"type"`
+	ImageType int64  `json:"type" db:"type"`
 	Image     string `json:"image" db:"image"`
 	Click     string `json:"click" db:"click"`
 }
@@ -71,6 +75,6 @@ type Upload struct {
 }
 
 type Commonresponse struct {
-	Code    int    `json:"code" structs:"code"`
+	Code    int64  `json:"code" structs:"code"`
 	Message string `json:"message" structs:"message"`
 }
