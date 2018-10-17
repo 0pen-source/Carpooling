@@ -99,7 +99,6 @@ func MyTrip(c *gin.Context) {
 func GetPhone(c *gin.Context) {
 	payload := models.Connected{}
 	if err := c.Bind(&payload); err != nil {
-		fmt.Println(err)
 		return
 	}
 

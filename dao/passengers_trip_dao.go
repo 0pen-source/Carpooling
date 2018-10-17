@@ -80,9 +80,9 @@ func GetMyTrip(user models.User) (trips []models.ResponseTrip, err error) {
 }
 func GetPhoneBYGUID(message models.Connected) (trips models.ResponseConnected, err error) {
 	query := "SELECT * FROM passengers_trip where guid=? "
-
+	fmt.Println("GetPhoneBYGUID---",err)
 	err = cacheDB.Select(&trips, query, message.Guid)
-	fmt.Println(err)
+	fmt.Println("GetPhoneBYGUID",err)
 	return trips, nil
 
 }
