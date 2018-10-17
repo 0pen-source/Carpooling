@@ -61,11 +61,11 @@ func SaveDriverTrip(trip models.DriverTrip) (models.DriverTrip, error) {
 
 }
 func GetMyDriverTrip(user models.User) (trips []models.ResponseTrip, err error) {
-	query := "SELECT * FROM passengers_trip where phone=:phone  ORDER BY create_time desc limit 20"
+	query := "SELECT * FROM passengers_trip where phone=?  ORDER BY create_time desc limit 20"
 
 	trips, ok := memCache.Get(fmt.Sprintf("%s-%s", user.Phone, "my_trip_driver")).([]models.ResponseTrip)
 	if !ok {
-		err = cacheDB.Select(&trips, query, user)
+		err = cacheDB.Select(&trips, query, user.Phone)
 	}
 	memCache.Put(fmt.Sprintf("%s-%s", user.Phone, "my_trip_driver"), trips, time.Minute*10)
 
