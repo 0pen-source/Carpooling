@@ -67,6 +67,7 @@ func GetMyDriverTrip(user models.User) (trips []models.ResponseTrip, err error) 
 	if !ok {
 		err = cacheDB.Select(&trips, query, user.Phone)
 	}
+	fmt.Println(err)
 	memCache.Put(fmt.Sprintf("%s-%s", user.Phone, "my_trip_driver"), trips, time.Minute*10)
 
 	return trips, nil

@@ -72,6 +72,7 @@ func GetMyTrip(user models.User) (trips []models.ResponseTrip, err error) {
 	if !ok {
 		err = cacheDB.Select(&trips, query, user.Phone)
 	}
+	fmt.Println(err)
 	memCache.Put(fmt.Sprintf("%s-%s", user.Phone, "my_trip_passenger"), trips, time.Minute*10)
 
 	return trips, nil
