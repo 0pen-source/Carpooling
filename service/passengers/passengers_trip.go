@@ -3,6 +3,7 @@ package passengers
 import (
 	"fmt"
 	"net/http"
+	"strings"
 	"time"
 
 	"github.com/0pen-source/Carpooling/dao"
@@ -45,6 +46,9 @@ func CreatTrip(c *gin.Context) {
 		SeatNum:                    payload.SeatNum,
 		Complete:                   payload.Complete,
 		Msg:                        payload.Msg,
+	}
+	if trip.NickName== trip.Phone || trip.NickName == ""{
+		trip.NickName=strings.Join([]string{trip.Phone[:4],"***",trip.Phone[7:]},"")
 	}
 	trip, err := dao.SavePassengersTrip(trip)
 	fmt.Println(err)
