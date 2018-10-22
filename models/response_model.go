@@ -43,6 +43,7 @@ type ResponseTrip struct {
 	From                       string  `json:"from" db:"from"`
 	FromRegion                 string  `json:"from_region" db:"from_region"`
 	FromCity                   string  `json:"from_city" db:"from_city"`
+	FromDistrict               string  `json:"from_district" db:"from_district"`
 	FromAccurateAddress        string  `json:"from_accurate_address" db:"from_accurate_address"`
 	FromVagueAddress           string  `json:"from_vague_address" db:"from_vague_address"`
 	FromLon                    float64 `json:"from_lon" db:"from_lon"`
@@ -50,6 +51,7 @@ type ResponseTrip struct {
 	Destination                string  `json:"destination" db:"destination"`
 	DestinationRegion          string  `json:"destination_region" db:"destination_region"`
 	DestinationCity            string  `json:"destination_city" db:"destination_city"`
+	DestinationDistrict        string  `json:"destination_district" db:"destination_district"`
 	DestinationAccurateAddress string  `json:"destination_accurate_address" db:"destination_accurate_address"`
 	DestinationVagueAddress    string  `json:"destination_vague_address" db:"destination_vague_address"`
 	Distance                   float64 `json:"distance" db:"distance"`

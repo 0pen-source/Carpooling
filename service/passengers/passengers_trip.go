@@ -22,12 +22,14 @@ func CreatTrip(c *gin.Context) {
 		postion := common.GetPosition(payload.FromLat, payload.FromLon)
 		payload.FromRegion = postion.Result.AddressComponent.Province
 		payload.FromCity = postion.Result.AddressComponent.City
+		payload.FromDistrict = postion.Result.AddressComponent.District
 		payload.FromVagueAddress = postion.Result.SematicDescription
 	}
 	if payload.DestinationRegion == "" || payload.DestinationCity == "" {
 		postion := common.GetPosition(payload.DestinationLat, payload.DestinationLon)
 		payload.DestinationRegion = postion.Result.AddressComponent.Province
 		payload.DestinationCity = postion.Result.AddressComponent.City
+		payload.DestinationDistrict = postion.Result.AddressComponent.District
 		payload.DestinationVagueAddress = postion.Result.SematicDescription
 	}
 	trip := models.PassengersTrip{
@@ -47,10 +49,12 @@ func CreatTrip(c *gin.Context) {
 		Surplus:                    payload.Surplus,
 		FromRegion:                 payload.FromRegion,
 		FromCity:                   payload.FromCity,
+		FromDistrict:               payload.FromDistrict,
 		FromAccurateAddress:        payload.FromAccurateAddress,
 		FromVagueAddress:           payload.FromVagueAddress,
 		DestinationRegion:          payload.DestinationRegion,
 		DestinationCity:            payload.DestinationCity,
+		DestinationDistrict:        payload.DestinationDistrict,
 		DestinationAccurateAddress: payload.DestinationAccurateAddress,
 		DestinationVagueAddress:    payload.DestinationVagueAddress,
 		Source:                     payload.Source,

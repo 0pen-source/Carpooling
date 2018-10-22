@@ -12,4 +12,5 @@ type AddressComponent struct {
 	Country  string `json:"country,omitempty" structs:"country"`
 	Province string `json:"province,omitempty" structs:"province"`
 	City     string `json:"city,omitempty" structs:"city"`
+	District string `json:"district,omitempty" structs:"district"`
 }
