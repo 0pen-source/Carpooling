@@ -87,7 +87,6 @@ func UpdateUser(user models.User) (err error) {
 	}
 	sql += strings.Join(core_strings, ",")
 	sql += " where phone = :phone"
-	fmt.Println(sql)
 	_, err = cacheDB.NamedExec(sql, user)
 	UpdateUserRedis(user.Phone)
 	fmt.Println(err)

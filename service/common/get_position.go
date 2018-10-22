@@ -19,7 +19,6 @@ func GetPosition(lat, lon float64) (postion models.Position) {
 	if err != nil {
 		// handle error
 	}
-	fmt.Println(string(body))
 	json.Unmarshal(body, &postion)
 	return
 }
