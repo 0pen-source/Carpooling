@@ -18,6 +18,18 @@ func CreatTrip(c *gin.Context) {
 		fmt.Println(err)
 		return
 	}
+	if payload.FromRegion == "" || payload.FromCity == "" {
+		postion := common.GetPosition(payload.FromLat, payload.FromLon)
+		payload.FromRegion = postion.Result.AddressComponent.Province
+		payload.FromCity = postion.Result.AddressComponent.City
+		payload.FromVagueAddress = postion.Result.SematicDescription
+	}
+	if payload.DestinationRegion == "" || payload.DestinationCity == "" {
+		postion := common.GetPosition(payload.DestinationLat, payload.DestinationLon)
+		payload.DestinationRegion = postion.Result.AddressComponent.Province
+		payload.DestinationCity = postion.Result.AddressComponent.City
+		payload.DestinationVagueAddress = postion.Result.SematicDescription
+	}
 	trip := models.PassengersTrip{
 		UserName:                   payload.Username,
 		NickName:                   payload.Nickname,
@@ -47,11 +59,10 @@ func CreatTrip(c *gin.Context) {
 		Complete:                   payload.Complete,
 		Msg:                        payload.Msg,
 	}
-	if trip.NickName== trip.Phone || trip.NickName == ""{
-		trip.NickName=strings.Join([]string{trip.Phone[:4],"***",trip.Phone[7:]},"")
+	if trip.NickName == trip.Phone || trip.NickName == "" {
+		trip.NickName = strings.Join([]string{trip.Phone[:4], "***", trip.Phone[7:]}, "")
 	}
 	trip, err := dao.SavePassengersTrip(trip)
-	fmt.Println(err)
 	response := models.Response{}
 	phonetest := models.PhoneTestResponse{}
 	if err != nil {

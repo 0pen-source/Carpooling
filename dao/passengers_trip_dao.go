@@ -33,7 +33,7 @@ func GetRecommendPassengersTrips(user models.User) (trips []models.ResponseTrip,
 	query := "SELECT * FROM `passengers_trip` group by phone order by create_time desc limit 20"
 	trips, ok := memCache.Get(fmt.Sprintf("%s-%s-%s", user.LastLat, user.LastLon, "driver")).([]models.ResponseTrip)
 	if !ok {
-		err = cacheDB.Select(&trips, query, user)
+		err = cacheDB.Select(&trips, query)
 	}
 	memCache.Put(fmt.Sprintf("%s-%s-%s", user.LastLat, user.LastLon, "driver"), trips, time.Minute*10)
 
@@ -62,6 +62,7 @@ func SavePassengersTrip(trip models.PassengersTrip) (models.PassengersTrip, erro
 	if err == nil {
 		redisManager.UpdateObject(trip.Guid, trip)
 	}
+	fmt.Println(err)
 	return trip, err
 
 }
@@ -80,7 +81,6 @@ func GetMyTrip(user models.User) (trips []models.ResponseTrip, err error) {
 }
 func GetPhoneBYGUID(message models.Connected) (trips []models.ResponseConnected, err error) {
 	query := "SELECT * FROM passengers_trip where guid=? "
-	fmt.Println("GetPhoneBYGUID---", err)
 	err = cacheDB.Select(&trips, query, message.Guid)
 	fmt.Println("GetPhoneBYGUID", err)
 	return trips, nil

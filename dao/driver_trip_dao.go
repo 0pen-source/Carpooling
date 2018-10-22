@@ -26,13 +26,10 @@ func GetRecommendDriverTrips(user models.User) (trips []models.ResponseTrip, err
 	query := "SELECT * FROM `passengers_trip` group by phone order by create_time desc limit 20"
 	trips, ok := memCache.Get(fmt.Sprintf("%s-%s-%s", user.LastLat, user.LastLon, "driver")).([]models.ResponseTrip)
 	if !ok {
-		err = cacheDB.Select(&trips, query, user.LastLat, user.LastLat, user.LastLon)
-		fmt.Println(err)
+		err = cacheDB.Select(&trips, query)
 	}
-	fmt.Println(trips)
-
 	memCache.Put(fmt.Sprintf("%s-%s-%s", user.LastLat, user.LastLon, "driver"), trips, time.Minute*10)
-
+	fmt.Println(err)
 	return trips, nil
 
 }
@@ -41,7 +38,7 @@ func GetSearchDriverTrips(trip models.PassengersTrip) (trips []models.ResponseTr
 	query := "SELECT *,((ROUND(6378.138 * 2 * ASIN(SQRT(POW(SIN((? * PI() / 180 - from_lat * PI() / 180) / 2),2) + COS(? * PI() / 180) * COS(from_lat * PI() / 180) * POW(SIN((? * PI() / 180 - from_lon * PI() / 180) / 2), 2))) * 1000) ) + (ROUND(6378.138 * 2 * ASIN(SQRT(POW(SIN((? * PI() / 180 - from_lat * PI() / 180) / 2),2) + COS(? * PI() / 180) * COS(from_lat * PI() / 180) * POW(SIN((? * PI() / 180 - from_lon * PI() / 180) / 2), 2))) * 1000) )) AS distance  FROM driver_trip WHERE travel_time>= ? and surplus>0 group by phone  ORDER BY distance ASC limit 20"
 
 	err = cacheDB.Select(&trips, query, trip.FromLat, trip.FromLat, trip.FromLon, trip.DestinationLat, trip.DestinationLat, trip.DestinationLon, trip.TravelTime)
-
+	fmt.Println(err)
 	return trips, nil
 
 }
@@ -58,6 +55,7 @@ func SaveDriverTrip(trip models.DriverTrip) (models.DriverTrip, error) {
 	if err == nil {
 		redisManager.UpdateObject(trip.Guid, trip)
 	}
+	fmt.Println(err)
 	return trip, err
 
 }
