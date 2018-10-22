@@ -23,12 +23,12 @@ func GetRealTimeDriverTrip() (trips []models.ResponseTrip, err error) {
 }
 func GetRecommendDriverTrips(user models.User) (trips []models.ResponseTrip, err error) {
 	//query := "SELECT *,ROUND(6378.138 * 2 * ASIN(SQRT(POW(SIN((? * PI() / 180 - from_lat * PI() / 180) / 2),2) + COS(? * PI() / 180) * COS(from_lat * PI() / 180) * POW(SIN((? * PI() / 180 - from_lon * PI() / 180) / 2), 2))) * 1000) AS distance FROM driver_trip where travel_time>=unix_timestamp(date_add(now(), interval -1 day) ) ORDER BY distance ASC limit 20"
-	query := "SELECT * FROM `passengers_trip` group by phone order by create_time desc limit 20"
-	trips, ok := memCache.Get(fmt.Sprintf("%s-%s-%s", user.LastLat, user.LastLon, "driver")).([]models.ResponseTrip)
-	if !ok {
-		err = cacheDB.Select(&trips, query)
-	}
-	memCache.Put(fmt.Sprintf("%s-%s-%s", user.LastLat, user.LastLon, "driver"), trips, time.Minute*10)
+	query := "SELECT * FROM `driver_trip` group by phone order by create_time desc limit 20"
+	//trips, ok := memCache.Get(fmt.Sprintf("%s-%s-%s", user.LastLat, user.LastLon, "driver")).([]models.ResponseTrip)
+	//if !ok {
+	err = cacheDB.Select(&trips, query)
+	//}
+	//memCache.Put(fmt.Sprintf("%s-%s-%s", user.LastLat, user.LastLon, "driver"), trips, time.Minute*10)
 	fmt.Println(err)
 	return trips, nil
 
@@ -74,7 +74,7 @@ func GetMyDriverTrip(user models.User) (trips []models.ResponseTrip, err error) 
 }
 func GetPhoneBYDriveerTripGUID(message models.Connected) (trips []models.ResponseConnected, err error) {
 	query := "SELECT * FROM driver_trip where guid=?  "
-	err=cacheDB.Select(&trips, query, message.Guid)
+	err = cacheDB.Select(&trips, query, message.Guid)
 	fmt.Println(err)
 	return trips, nil
 
