@@ -2,6 +2,8 @@ package drivers
 
 import (
 	"net/http"
+	"strconv"
+	"time"
 
 	"github.com/0pen-source/Carpooling/dao"
 	"github.com/0pen-source/Carpooling/models"
@@ -30,7 +32,9 @@ func SearchTrip(c *gin.Context) {
 		TravelTime:          payload.TravelTime,
 		Surplus:             payload.Surplus,
 	}
-
+	if trip.TravelTime == "" {
+		trip.TravelTime = strconv.FormatInt(time.Now().Unix(), 10)
+	}
 	recommendTrip, _ := dao.GetSearchPassengersTrips(trip)
 
 	response := models.Response{}

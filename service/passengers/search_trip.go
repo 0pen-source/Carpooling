@@ -3,6 +3,8 @@ package passengers
 import (
 	"fmt"
 	"net/http"
+	"strconv"
+	"time"
 
 	"github.com/0pen-source/Carpooling/dao"
 	"github.com/0pen-source/Carpooling/models"
@@ -31,6 +33,9 @@ func SearchTrip(c *gin.Context) {
 		DestinationDistrict: payload.DestinationDistrict,
 		TravelTime:          payload.TravelTime,
 		Surplus:             payload.Surplus,
+	}
+	if trip.TravelTime == "" {
+		trip.TravelTime = strconv.FormatInt(time.Now().Unix(), 10)
 	}
 
 	recommendTrip, _ := dao.GetSearchDriverTrips(trip)
