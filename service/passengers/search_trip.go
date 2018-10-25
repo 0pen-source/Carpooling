@@ -17,14 +17,20 @@ func SearchTrip(c *gin.Context) {
 		return
 	}
 	trip := models.PassengersTrip{
-		From:           payload.From,
-		FromLon:        payload.FromLon,
-		FromLat:        payload.FromLat,
-		Destination:    payload.Destination,
-		DestinationLon: payload.DestinationLon,
-		DestinationLat: payload.DestinationLat,
-		TravelTime:     payload.TravelTime,
-		Surplus:        payload.Surplus,
+		From:                payload.From,
+		FromLon:             payload.FromLon,
+		FromLat:             payload.FromLat,
+		FromRegion:          payload.FromRegion,
+		FromCity:            payload.FromCity,
+		FromDistrict:        payload.FromDistrict,
+		Destination:         payload.Destination,
+		DestinationLon:      payload.DestinationLon,
+		DestinationLat:      payload.DestinationLat,
+		DestinationRegion:   payload.DestinationRegion,
+		DestinationCity:     payload.DestinationCity,
+		DestinationDistrict: payload.DestinationDistrict,
+		TravelTime:          payload.TravelTime,
+		Surplus:             payload.Surplus,
 	}
 
 	recommendTrip, _ := dao.GetSearchDriverTrips(trip)
