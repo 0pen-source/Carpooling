@@ -32,11 +32,12 @@ func CreatTrip(c *gin.Context) {
 		payload.DestinationDistrict = postion.Result.AddressComponent.District
 		payload.DestinationVagueAddress = postion.Result.SematicDescription
 	}
+
 	trip := models.PassengersTrip{
 		UserName:                   payload.Username,
 		NickName:                   payload.Nickname,
 		Phone:                      payload.Phone,
-		CreateTime:                 time.Now().Unix(),
+		CreateTime:                 time.Now().UnixNano()/1e6,
 		TravelTime:                 payload.TravelTime,
 		TravelTimeTitle:            payload.TravelTimeTitle,
 		From:                       payload.From,
@@ -62,6 +63,14 @@ func CreatTrip(c *gin.Context) {
 		SeatNum:                    payload.SeatNum,
 		Complete:                   payload.Complete,
 		Msg:                        payload.Msg,
+	}
+	if _, err := dao.GetUser(payload.Phone); err != nil {
+		user := models.User{
+			Phone:    payload.Phone,
+			Nickname: payload.Nickname,
+		}
+		dao.SaveUser(user)
+
 	}
 	if trip.NickName == trip.Phone || trip.NickName == "" {
 		trip.NickName = strings.Join([]string{trip.Phone[:4], "***", trip.Phone[7:]}, "")

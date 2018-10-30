@@ -35,7 +35,7 @@ func CreatTrip(c *gin.Context) {
 		UserName:                   payload.Username,
 		NickName:                   payload.Nickname,
 		Phone:                      payload.Phone,
-		CreateTime:                 time.Now().Unix(),
+		CreateTime:                 time.Now().UnixNano()/1e6,
 		TravelTime:                 payload.TravelTime,
 		TravelTimeTitle:            payload.TravelTimeTitle,
 		From:                       payload.From,

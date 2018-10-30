@@ -33,7 +33,7 @@ func SearchTrip(c *gin.Context) {
 		Surplus:             payload.Surplus,
 	}
 	if trip.TravelTime == "" {
-		trip.TravelTime = strconv.FormatInt(time.Now().Unix(), 10)
+		trip.TravelTime = strconv.FormatInt(time.Now().UnixNano()/1e6, 10)
 	}
 	recommendTrip, _ := dao.GetSearchPassengersTrips(trip)
 

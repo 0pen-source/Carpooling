@@ -10,7 +10,7 @@ import (
 
 // GetRealTimeDriverTrip _
 func GetRealTimeDriverTrip() (trips []models.ResponseTrip, err error) {
-	query := "SELECT * FROM `passengers_trip`  order by create_time desc limit 20"
+	query := "select * from (select * from driver_trip order by create_time desc) as a group by phone limit 20"
 
 	trips, ok := memCache.Get(query).([]models.ResponseTrip)
 	if !ok {
@@ -23,7 +23,7 @@ func GetRealTimeDriverTrip() (trips []models.ResponseTrip, err error) {
 }
 func GetRecommendDriverTrips(user models.User) (trips []models.ResponseTrip, err error) {
 	//query := "SELECT *,ROUND(6378.138 * 2 * ASIN(SQRT(POW(SIN((? * PI() / 180 - from_lat * PI() / 180) / 2),2) + COS(? * PI() / 180) * COS(from_lat * PI() / 180) * POW(SIN((? * PI() / 180 - from_lon * PI() / 180) / 2), 2))) * 1000) AS distance FROM driver_trip where travel_time>=unix_timestamp(date_add(now(), interval -1 day) ) ORDER BY distance ASC limit 20"
-	query := "SELECT * FROM `driver_trip`  order by create_time desc limit 20"
+	query := "select * from (select * from driver_trip order by create_time desc) as a group by phone limit 20"
 	//trips, ok := memCache.Get(fmt.Sprintf("%s-%s-%s", user.LastLat, user.LastLon, "driver")).([]models.ResponseTrip)
 	//if !ok {
 	err = cacheDB.Select(&trips, query)
