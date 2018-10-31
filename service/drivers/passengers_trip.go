@@ -35,7 +35,7 @@ func CreatTrip(c *gin.Context) {
 		UserName:                   payload.Username,
 		NickName:                   payload.Nickname,
 		Phone:                      payload.Phone,
-		CreateTime:                 time.Now().UnixNano()/1e6,
+		CreateTime:                 time.Now().UnixNano() / 1e6,
 		TravelTime:                 payload.TravelTime,
 		TravelTimeTitle:            payload.TravelTimeTitle,
 		From:                       payload.From,
@@ -64,6 +64,18 @@ func CreatTrip(c *gin.Context) {
 	}
 	if trip.NickName == trip.Phone || trip.NickName == "" {
 		trip.NickName = strings.Join([]string{trip.Phone[:4], "***", trip.Phone[7:]}, "")
+	}
+	if _, err := dao.GetUser(payload.Phone); err != nil {
+		user := models.User{
+			Phone:    payload.Phone,
+			Nickname: payload.Nickname,
+		}
+		_, user = dao.SaveUser(user)
+		trip.PortraitURL = user.PortraitURL
+
+	} else {
+		user, _ := dao.GetUser(payload.Phone)
+		trip.PortraitURL = user.PortraitURL
 	}
 	trip, err := dao.SaveDriverTrip(trip)
 	response := models.Response{}

@@ -3,6 +3,7 @@ package dao
 import (
 	"encoding/json"
 	"fmt"
+	"math/rand"
 	"os"
 	"strings"
 
@@ -13,6 +14,19 @@ import (
 const (
 	Token_REDIS_KEY = "token"
 )
+
+var USERS_PORTRAIT = []string{
+	"https://users-portrait.oss-cn-beijing.aliyuncs.com/25542158565e1df6f1f4dfe196f68263.jpg",
+	"https://users-portrait.oss-cn-beijing.aliyuncs.com/46e6a933d8149f7c03e4f900431a619c.jpeg",
+	"https://users-portrait.oss-cn-beijing.aliyuncs.com/8e92f8f6edd94a6c5b26db8ce8f89731.jpeg",
+	"https://users-portrait.oss-cn-beijing.aliyuncs.com/head1.jpg",
+	"https://users-portrait.oss-cn-beijing.aliyuncs.com/head2.jpg",
+	"https://users-portrait.oss-cn-beijing.aliyuncs.com/head3.jpg",
+	"https://users-portrait.oss-cn-beijing.aliyuncs.com/head4.jpg",
+	"https://users-portrait.oss-cn-beijing.aliyuncs.com/head5.jpg",
+	"https://users-portrait.oss-cn-beijing.aliyuncs.com/head6.jpg",
+	"https://users-portrait.oss-cn-beijing.aliyuncs.com/head7.jpg",
+}
 
 // GetUser _
 func GetUser(phone string) (user models.User, err error) {
@@ -35,13 +49,20 @@ func GetUser(phone string) (user models.User, err error) {
 }
 
 // SaveUser _
-func SaveUser(user models.User) (err error) {
+func SaveUser(user models.User) (error, models.User) {
 	user.Guid = xid.New().String()
-	_, err = cacheDB.NamedExec("INSERT INTO user (phone, password, nickname, guid) VALUES (:phone, :password, :nickname, :guid)", user)
+	if user.Nickname == user.Phone || user.Nickname == "" {
+		user.Nickname = strings.Join([]string{user.Phone[:4], "***", user.Phone[7:]}, "")
+	}
+	if user.PortraitURL == "" {
+		n := rand.Intn(len(USERS_PORTRAIT))
+		user.PortraitURL = USERS_PORTRAIT[n]
+	}
+	_, err := cacheDB.NamedExec("INSERT INTO user (phone, password, nickname, guid,portrait_url) VALUES (:phone, :password, :nickname, :guid,:portrait_url)", user)
 	if err == nil {
 		UpdateUserRedis(user.Phone)
 	}
-	return err
+	return err, user
 
 }
 

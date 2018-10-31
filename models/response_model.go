@@ -33,10 +33,10 @@ type IndexResponse struct {
 }
 
 type ResponseTrip struct {
-	Guid     string `json:"guid" db:"guid"`
-	UserName string `json:"username" db:"username"`
-	NickName string `json:"nickname" db:"nickname"`
-	//Phone                      string  `json:"phone" db:"phone"`
+	Guid                       string  `json:"guid" db:"guid"`
+	UserName                   string  `json:"username" db:"username"`
+	NickName                   string  `json:"nickname" db:"nickname"`
+	PortraitURL                string  `json:"portrait_url" db:"portrait_url"`
 	CreateTime                 int64   `json:"create_time" db:"create_time"`
 	TravelTime                 int64   `json:"travel_time" db:"travel_time"`
 	TravelTimeTitle            string  `json:"travel_time_title" db:"travel_time_title"`

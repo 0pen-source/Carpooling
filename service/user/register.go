@@ -19,7 +19,7 @@ func Register(c *gin.Context) {
 		Password: payload.Password,
 		Nickname: payload.Nickname,
 	}
-	err := dao.SaveUser(user)
+	err,_ := dao.SaveUser(user)
 	response := models.Response{}
 	phonetest := models.PhoneTestResponse{}
 	if err != nil {

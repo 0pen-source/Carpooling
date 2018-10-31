@@ -10,6 +10,7 @@ type User struct {
 	Username           string  `db:"username"`
 	Password           string  `db:"password"`
 	Nickname           string  `db:"nickname"`
+	PortraitURL        string  `db:"portrait_url"`
 	Sex                int64   `db:"sex"`
 	Balance            int64   `db:"balance"`
 	LastLat            float64 `db:"last_lat"`
@@ -23,6 +24,7 @@ type PassengersTrip struct {
 	Guid                       string  `db:"guid"`
 	UserName                   string  `db:"username"`
 	NickName                   string  `db:"nickname"`
+	PortraitURL                string  `db:"portrait_url"`
 	Phone                      string  `db:"phone"`
 	Msg                        string  `db:"msg"`
 	CreateTime                 int64   `db:"create_time"`
@@ -64,6 +66,7 @@ type DriverTrip struct {
 	Guid                       string  `db:"guid"`
 	UserName                   string  `db:"username"`
 	NickName                   string  `db:"nickname"`
+	PortraitURL                string  `db:"portrait_url"`
 	Phone                      string  `db:"phone"`
 	Msg                        string  `db:"msg"`
 	CreateTime                 int64   `db:"create_time"`
