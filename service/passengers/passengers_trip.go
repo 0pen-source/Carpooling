@@ -64,7 +64,9 @@ func CreatTrip(c *gin.Context) {
 		Complete:                   payload.Complete,
 		Msg:                        payload.Msg,
 	}
-	if _, err := dao.GetUser(payload.Phone); err != nil {
+	
+	user, userErr := dao.GetUser(payload.Phone)
+	if userErr != nil {
 		user := models.User{
 			Phone:    payload.Phone,
 			Nickname: payload.Nickname,
@@ -73,7 +75,6 @@ func CreatTrip(c *gin.Context) {
 		trip.PortraitURL = user.PortraitURL
 
 	} else {
-		user, _ := dao.GetUser(payload.Phone)
 		trip.PortraitURL = user.PortraitURL
 	}
 	if trip.NickName == trip.Phone || trip.NickName == "" {
