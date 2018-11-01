@@ -2,6 +2,7 @@ package dao
 
 import (
 	"fmt"
+	"strconv"
 	"time"
 
 	"github.com/0pen-source/Carpooling/models"
@@ -10,11 +11,11 @@ import (
 
 // GetRealTimeDriverTrip _
 func GetRealTimeDriverTrip() (trips []models.ResponseTrip, err error) {
-	query := "SELECT * from driver_trip group by phone order by create_time desc  limit 20;"
+	query := "SELECT * from driver_trip WHERE travel_time>= ? group by phone order by create_time desc  limit 20;"
 
 	trips, ok := memCache.Get(query).([]models.ResponseTrip)
 	if !ok {
-		err = cacheDB.Select(&trips, query)
+		err = cacheDB.Select(&trips, query,strconv.FormatInt(time.Now().UnixNano()/1e6, 10))
 	}
 	memCache.Put(query, trips, time.Hour*1)
 
@@ -26,7 +27,7 @@ func GetRecommendDriverTrips(user models.User) (trips []models.ResponseTrip, err
 	query := "SELECT * from driver_trip group by phone order by create_time desc  limit 20;"
 	//trips, ok := memCache.Get(fmt.Sprintf("%s-%s-%s", user.LastLat, user.LastLon, "driver")).([]models.ResponseTrip)
 	//if !ok {
-	err = cacheDB.Select(&trips, query)
+	err = cacheDB.Select(&trips, query,strconv.FormatInt(time.Now().UnixNano()/1e6, 10))
 	//}
 	//memCache.Put(fmt.Sprintf("%s-%s-%s", user.LastLat, user.LastLon, "driver"), trips, time.Minute*10)
 	fmt.Println(err)
