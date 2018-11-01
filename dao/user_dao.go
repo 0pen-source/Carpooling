@@ -43,7 +43,7 @@ func GetUser(phone string) (user models.User, err error) {
 			redisManager.SetKey(phone, string(userbyte))
 		}
 	}
-	fmt.Println(err)
+	fmt.Println(user)
 	return user, err
 
 }
