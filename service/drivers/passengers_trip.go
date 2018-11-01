@@ -1,6 +1,7 @@
 package drivers
 
 import (
+	"fmt"
 	"net/http"
 	"strings"
 	"time"
@@ -77,7 +78,8 @@ func CreatTrip(c *gin.Context) {
 	} else {
 		trip.PortraitURL = user.PortraitURL
 	}
-
+	fmt.Println("trip.PortraitURL------", trip.PortraitURL)
+	fmt.Println("user.PortraitURL------", user.PortraitURL)
 	trip, err := dao.SaveDriverTrip(trip)
 	response := models.Response{}
 	phonetest := models.PhoneTestResponse{}
