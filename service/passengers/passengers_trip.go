@@ -12,6 +12,10 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+func TestUrl(c *gin.Context) {
+
+}
+
 func CreatTrip(c *gin.Context) {
 	payload := models.TripMessage{}
 	if err := c.Bind(&payload); err != nil {
@@ -64,7 +68,7 @@ func CreatTrip(c *gin.Context) {
 		Complete:                   payload.Complete,
 		Msg:                        payload.Msg,
 	}
-	
+
 	user, userErr := dao.GetUser(payload.Phone)
 	if userErr != nil {
 		user := models.User{
